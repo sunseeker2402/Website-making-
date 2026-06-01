@@ -9,18 +9,18 @@
       --orange:       #E86B00;
       --orange-light: #FF9A3C;
       --orange-dark:  #B85300;
-      --orange-glow:  rgba(232, 107, 0, 0.25);
-      --bg:           #0F0F0F;
-      --surface:      #181818;
-      --surface2:     #222222;
-      --border:       #2E2E2E;
-      --text:         #F0F0F0;
-      --muted:        #999;
-      --sig:          #FF9A3C;
-      --ns:           #888;
+      --orange-glow:  rgba(232, 107, 0, 0.10);
+      --bg:           #F5F5F5;
+      --surface:      #FFFFFF;
+      --surface2:     #F0F0F0;
+      --border:       #E0E0E0;
+      --border-dark:  #BBBBBB;
+      --text:         #111111;
+      --muted:        #666666;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    -webkit-tap-highlight-color: transparent;
 
     body {
       background: var(--bg);
@@ -37,8 +37,9 @@
     /* ─── NAV BAR ────────────────────────────────────── */
     nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(15,15,15,0.92);
+      background: rgba(255,255,255,0.96);
       backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
       padding: 0 2rem;
       display: flex; align-items: center; justify-content: space-between;
@@ -53,11 +54,13 @@
     /* ─── BACK BUTTON ────────────────────────────────── */
     .back-btn {
       display: inline-flex; align-items: center; gap: 0.5rem;
-      background: transparent; border: 1px solid var(--border);
+      background: transparent; border: 1.5px solid var(--border-dark);
       color: var(--muted); padding: 0.4rem 1rem; border-radius: 6px;
-      cursor: pointer; font-size: 0.85rem; transition: all 0.2s;
+      cursor: pointer; font-size: 0.85rem; transition: all 0.18s;
+      -webkit-appearance: none;
     }
-    .back-btn:hover { border-color: var(--orange); color: var(--orange); }
+    .back-btn:hover,
+    .back-btn:active { border-color: #000; background: #000; color: #fff; }
 
     /* ─── HERO ────────────────────────────────────────── */
     .hero {
@@ -74,7 +77,7 @@
     .hero h1 {
       font-size: clamp(1.8rem, 4vw, 3rem);
       font-weight: 800; line-height: 1.2;
-      margin-bottom: 1rem;
+      margin-bottom: 1rem; color: var(--text);
     }
     .hero h1 span { color: var(--orange); }
     .hero-sub {
@@ -89,11 +92,12 @@
       padding: 0 2rem;
     }
     .stat-card {
-      background: var(--surface); border: 1px solid var(--border);
+      background: var(--surface); border: 1.5px solid var(--border);
       border-radius: 12px; padding: 1.2rem 1rem; text-align: center;
-      transition: border-color 0.2s, transform 0.2s;
+      transition: border-color 0.18s, transform 0.18s, box-shadow 0.18s;
     }
-    .stat-card:hover { border-color: var(--orange); transform: translateY(-2px); }
+    .stat-card:hover,
+    .stat-card:active { border-color: #000; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.10); }
     .stat-val {
       font-size: 1.9rem; font-weight: 800; color: var(--orange);
       line-height: 1;
@@ -106,24 +110,25 @@
       padding: 0 2rem;
     }
     .conclusion-card {
-      background: linear-gradient(135deg, #1C1200 0%, var(--surface) 100%);
-      border: 1px solid var(--orange-dark); border-radius: 14px;
+      background: linear-gradient(135deg, #FFF5EC 0%, #FFFFFF 60%);
+      border: 1.5px solid var(--orange); border-radius: 14px;
       padding: 2rem 2.5rem;
     }
     .conclusion-card h2 {
       font-size: 1.2rem; font-weight: 700; color: var(--orange);
-      margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.08em;
+      margin-bottom: 1.2rem; text-transform: uppercase; letter-spacing: 0.08em;
     }
-    .conclusion-points { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+    .conclusion-points { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
     .conclusion-points li {
       display: flex; align-items: flex-start; gap: 0.75rem;
-      font-size: 0.95rem;
+      font-size: 0.95rem; color: var(--text); line-height: 1.65;
     }
     .conclusion-points li::before {
       content: '›';
-      color: var(--orange); font-size: 1.2rem; line-height: 1.4;
-      flex-shrink: 0;
+      color: var(--orange); font-size: 1.3rem; line-height: 1.35;
+      flex-shrink: 0; font-weight: 700;
     }
+    .conclusion-points li span { display: block; }
 
     /* ─── SECTION CARDS ──────────────────────────────── */
     .sections-title {
@@ -138,28 +143,28 @@
       padding: 0 2rem;
     }
     .section-card {
-      background: var(--surface); border: 1px solid var(--border);
+      background: var(--surface); border: 1.5px solid var(--border);
       border-radius: 14px; padding: 1.6rem 1.4rem;
-      cursor: pointer; transition: all 0.22s; position: relative;
+      cursor: pointer; transition: all 0.18s; position: relative;
       overflow: hidden;
     }
     .section-card::before {
       content: '';
       position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: var(--orange); transform: scaleX(0); transform-origin: left;
-      transition: transform 0.22s;
+      background: #000; transform: scaleX(0); transform-origin: left;
+      transition: transform 0.2s;
     }
-    .section-card:hover { border-color: var(--orange); transform: translateY(-3px); box-shadow: 0 8px 32px var(--orange-glow); }
-    .section-card:hover::before { transform: scaleX(1); }
+    .section-card:hover,
+    .section-card:active { border-color: #000; transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,0.12); }
+    .section-card:hover::before,
+    .section-card:active::before { transform: scaleX(1); }
     .section-num {
       font-size: 0.7rem; color: var(--orange); letter-spacing: 0.1em;
       text-transform: uppercase; margin-bottom: 0.6rem;
     }
-    .section-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .section-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text); }
     .section-card p { font-size: 0.82rem; color: var(--muted); }
-    .section-arrow {
-      margin-top: 1.2rem; color: var(--orange); font-size: 1.1rem;
-    }
+    .section-arrow { margin-top: 1.2rem; color: #000; font-size: 1.1rem; font-weight: 700; }
 
     /* ─── INNER SECTION PAGE ─────────────────────────── */
     .section-page-header {
@@ -169,7 +174,7 @@
       flex-wrap: wrap;
     }
     .section-page-header h2 {
-      font-size: clamp(1.2rem, 2.5vw, 1.8rem); font-weight: 800;
+      font-size: clamp(1.2rem, 2.5vw, 1.8rem); font-weight: 800; color: var(--text);
     }
     .section-page-header h2 span { color: var(--orange); }
 
@@ -183,52 +188,65 @@
       .section-layout { grid-template-columns: 1fr; }
     }
 
+    /* ─── SUB-SECTIONS (Table 1 grouping) ───────────── */
+    .sub-section { margin-bottom: 1.5rem; }
+    .sub-section-header {
+      background: #111111; color: #ffffff;
+      padding: 0.6rem 1.1rem;
+      border-radius: 10px 10px 0 0;
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .sub-section-header .sh-accent { color: var(--orange-light); }
+    .sub-section .table-wrapper {
+      border-radius: 0 0 10px 10px;
+      border-top: none;
+    }
+
     /* ─── TABLE ───────────────────────────────────────── */
     .table-wrapper {
       overflow-x: auto;
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 14px;
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: 12px;
     }
     table {
       width: 100%; border-collapse: collapse;
       font-size: 0.84rem;
     }
     thead th {
-      background: #1E1100; color: var(--orange);
+      background: #FFF5EC; color: var(--orange-dark);
       padding: 0.85rem 1rem; text-align: left;
-      font-weight: 700; font-size: 0.78rem; letter-spacing: 0.05em;
-      border-bottom: 1px solid var(--border);
+      font-weight: 700; font-size: 0.78rem; letter-spacing: 0.04em;
+      border-bottom: 1.5px solid var(--border);
       white-space: nowrap;
     }
     tbody td {
-      padding: 0.7rem 1rem; border-bottom: 1px solid #1E1E1E;
-      vertical-align: top;
+      padding: 0.7rem 1rem; border-bottom: 1px solid #F0F0F0;
+      vertical-align: top; color: var(--text);
     }
     tbody tr:last-child td { border-bottom: none; }
-    tbody tr.group-header td {
-      background: #161616; color: var(--orange);
-      font-weight: 700; font-size: 0.78rem; letter-spacing: 0.06em;
-      text-transform: uppercase; padding: 0.5rem 1rem;
-    }
     tbody tr.hoverable { cursor: pointer; transition: background 0.15s; }
-    tbody tr.hoverable:hover { background: #1E1200; }
-    tbody tr.hoverable:hover td { color: #fff; }
+    tbody tr.hoverable:hover,
+    tbody tr.hoverable:active { background: #F0F0F0; }
+    tbody tr.hoverable:hover td,
+    tbody tr.hoverable:active td { color: #000; }
 
     .sig-badge {
       display: inline-block; background: var(--orange-glow);
-      border: 1px solid var(--orange); color: var(--orange);
+      border: 1px solid var(--orange); color: var(--orange-dark);
       padding: 0.15rem 0.55rem; border-radius: 99px;
       font-size: 0.72rem; font-weight: 700; white-space: nowrap;
     }
     .ns-badge {
-      display: inline-block; background: transparent;
-      border: 1px solid #333; color: #666;
+      display: inline-block; background: #F5F5F5;
+      border: 1px solid #DDDDDD; color: #888888;
       padding: 0.15rem 0.55rem; border-radius: 99px;
       font-size: 0.72rem; white-space: nowrap;
     }
     .border-badge {
-      display: inline-block; background: rgba(255,180,0,0.08);
-      border: 1px solid #886000; color: #FFB800;
+      display: inline-block; background: #FFF8E0;
+      border: 1px solid #CCA800; color: #886600;
       padding: 0.15rem 0.55rem; border-radius: 99px;
       font-size: 0.72rem; white-space: nowrap;
     }
@@ -236,7 +254,7 @@
     /* ─── EXPLANATION PANEL ──────────────────────────── */
     .explain-panel {
       position: sticky; top: 80px;
-      background: var(--surface); border: 1px solid var(--border);
+      background: var(--surface); border: 1.5px solid var(--border);
       border-radius: 14px; padding: 1.4rem;
     }
     .explain-panel h4 {
@@ -247,41 +265,39 @@
     .explain-content { display: none; }
     .explain-content.active { display: block; }
     .explain-content h5 {
-      font-size: 0.9rem; font-weight: 700; margin-bottom: 0.5rem; color: #fff;
+      font-size: 0.9rem; font-weight: 700; margin-bottom: 0.5rem; color: #111;
     }
-    .explain-content p { font-size: 0.84rem; color: #ccc; line-height: 1.7; }
+    .explain-content p { font-size: 0.84rem; color: #444; line-height: 1.7; }
     .explain-content .p-val {
       margin-top: 0.6rem; font-size: 0.78rem;
       padding: 0.35rem 0.75rem; border-radius: 6px;
       display: inline-block; font-weight: 700;
     }
-    .explain-content .p-sig { background: var(--orange-glow); border: 1px solid var(--orange); color: var(--orange); }
-    .explain-content .p-ns  { background: #1a1a1a; border: 1px solid #333; color: #666; }
-    .explain-content .p-border { background: rgba(255,180,0,0.08); border: 1px solid #886000; color: #FFB800; }
+    .explain-content .p-sig { background: var(--orange-glow); border: 1px solid var(--orange); color: var(--orange-dark); }
+    .explain-content .p-ns  { background: #F5F5F5; border: 1px solid #DDD; color: #777; }
+    .explain-content .p-border { background: #FFF8E0; border: 1px solid #CCA800; color: #7A5A00; }
 
     /* ─── INTRO CARD ─────────────────────────────────── */
     .intro-card {
-      background: var(--surface2); border: 1px solid var(--border);
+      background: #F9F9F9; border: 1px solid var(--border);
       border-radius: 10px; padding: 1.2rem; margin-bottom: 1rem;
-      font-size: 0.85rem; color: #bbb; line-height: 1.7;
+      font-size: 0.85rem; color: #444444; line-height: 1.7;
     }
-    .intro-card strong { color: var(--orange); }
+    .intro-card strong { color: var(--orange-dark); }
 
     /* ─── FOOTNOTE ───────────────────────────────────── */
     .footnote {
-      font-size: 0.75rem; color: #555; margin-top: 0.75rem;
-      padding: 0.75rem 1rem; background: #111; border-radius: 6px;
+      font-size: 0.75rem; color: #666; margin-top: 0.75rem;
+      padding: 0.75rem 1rem; background: #F5F5F5;
+      border: 1px solid var(--border); border-radius: 6px;
       line-height: 1.6;
     }
 
     /* ─── SCROLLBAR ──────────────────────────────────── */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--orange-dark); }
-
-    /* ─── DIVIDER ────────────────────────────────────── */
-    .divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+    ::-webkit-scrollbar-thumb { background: #CCC; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #999; }
   </style>
 </head>
 <body>
@@ -297,9 +313,7 @@
   <div class="hero">
     <div class="hero-tag">Clinical Research · Haemodialysis · Biomarkers</div>
     <h1>hs-Troponin I Elevation in<br/><span>End-Stage Renal Disease</span></h1>
-    <p class="hero-sub">
-      A cross-sectional analysis of 83 haemodialysis patients examining the clinical, demographic, and electrocardiographic correlates of chronically elevated high-sensitivity cardiac troponin I (hs-Troponin I).
-    </p>
+    <p class="hero-sub">A cross-sectional analysis of 83 haemodialysis patients examining the clinical, demographic, and electrocardiographic correlates of chronically elevated high-sensitivity cardiac troponin I (hs-Troponin I).</p>
   </div>
 
   <div class="stat-row">
@@ -329,24 +343,12 @@
     <div class="conclusion-card">
       <h2>Overall Conclusion</h2>
       <ul class="conclusion-points">
-        <li>
-          Nearly all ESRD haemodialysis patients (98.8%) exhibited chronically elevated hs-Troponin I far exceeding the standard 99th-percentile diagnostic threshold of 14 ng/L, confirming that the standard ACS cut-off is not applicable in this population.
-        </li>
-        <li>
-          <strong>Older age</strong> was the sole independent predictor reaching statistical significance (B = +0.016, p = 0.003), suggesting that myocardial stress accumulates over time in ESRD even after adjusting for other risk factors.
-        </li>
-        <li>
-          <strong>Dialysis adequacy (Kt/V)</strong> showed a consistent inverse relationship with troponin — lower Kt/V = higher troponin — reaching significance in univariate analysis (rs = −0.34, p = 0.001) and borderline significance in the multivariable model (p = 0.051), indicating inadequate dialysis may contribute to myocardial stress.
-        </li>
-        <li>
-          Elevated ultrafiltration volume and a history of cerebrovascular accident were also significantly more common in the high-troponin group, highlighting the systemic burden of cardiovascular disease in these patients.
-        </li>
-        <li>
-          ECG changes (ST depression, T-wave inversion, LVH, QTc prolongation) were widespread across all patients but did <em>not</em> differ significantly between high- and low-troponin groups, underscoring that troponin elevation is independent of surface ECG morphology in ESRD.
-        </li>
-        <li>
-          <strong>QRS duration</strong> was the only ECG parameter significantly different between groups (p = 0.046), though this likely reflects ventricular conduction variability rather than a direct troponin-driven process.
-        </li>
+        <li><span>Nearly all ESRD haemodialysis patients (98.8%) exhibited chronically elevated hs-Troponin I far exceeding the standard 99th-percentile diagnostic threshold of 14 ng/L, confirming that the standard ACS cut-off is not applicable in this population.</span></li>
+        <li><span><strong>Older age</strong> was the sole independent predictor reaching statistical significance (B = +0.016, p = 0.003), suggesting that myocardial stress accumulates over time in ESRD even after adjusting for other risk factors.</span></li>
+        <li><span><strong>Dialysis adequacy (Kt/V)</strong> showed a consistent inverse relationship with troponin — lower Kt/V = higher troponin — significant in univariate analysis (rs = −0.34, p = 0.001) and borderline in the multivariable model (p = 0.051), indicating inadequate dialysis may contribute to myocardial stress.</span></li>
+        <li><span>Elevated ultrafiltration volume and a history of cerebrovascular accident were significantly more common in the high-troponin group, highlighting the systemic cardiovascular burden in these patients.</span></li>
+        <li><span>ECG changes (ST depression, T-wave inversion, LVH, QTc prolongation) were widespread across all patients but did <em>not</em> differ significantly between high- and low-troponin groups, underscoring that troponin elevation is independent of surface ECG morphology in ESRD.</span></li>
+        <li><span><strong>QRS duration</strong> was the only ECG parameter significantly different between groups (p = 0.046), though this likely reflects ventricular conduction variability rather than a direct troponin-driven process.</span></li>
       </ul>
     </div>
   </div>
@@ -400,139 +402,200 @@
   <div class="section-layout">
     <div>
       <div class="intro-card">
-        Baseline characteristics of <strong>83 haemodialysis patients</strong> split at the cohort median hs-Troponin I of <strong>61.8 ng/L</strong> into high (n=41) and low (n=42) groups. Groups were broadly similar, but <strong>age, ultrafiltration volume, and cerebrovascular accident history</strong> differed significantly. Hover any row to see its explanation.
+        Baseline characteristics of <strong>83 haemodialysis patients</strong> split at the cohort median hs-Troponin I of <strong>61.8 ng/L</strong> into high (n=41) and low (n=42) groups. Groups were broadly similar, but <strong>age, ultrafiltration volume, and cerebrovascular accident history</strong> differed significantly. Tap any row to see its explanation.
       </div>
 
-      <div class="table-wrapper">
-        <table>
-          <thead>
-            <tr>
-              <th>Characteristic</th>
-              <th>Total (N=83)</th>
-              <th>High &gt;61.8 ng/L (n=41)</th>
-              <th>Low ≤61.8 ng/L (n=42)</th>
-              <th>p-value</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="group-header"><td colspan="5">Demographics</td></tr>
+      <!-- ── DEMOGRAPHICS ── -->
+      <div class="sub-section">
+        <div class="sub-section-header">
+          <span class="sh-accent">01 ·</span> Demographics
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Characteristic</th>
+                <th>Total (N=83)</th>
+                <th>High &gt;61.8 ng/L (n=41)</th>
+                <th>Low ≤61.8 ng/L (n=42)</th>
+                <th>p-value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="hoverable" onmouseenter="showExplain('e-age')" ontouchstart="showExplain('e-age')" onmouseleave="hideExplain()">
+                <td>Age (years), median (IQR)</td>
+                <td>64.0 (44.0–75.0)</td>
+                <td>67.0 (52.0–76.0)</td>
+                <td>58.0 (40.0–72.0)</td>
+                <td><span class="sig-badge">0.033 ✓</span></td>
+              </tr>
+              <tr class="hoverable" onmouseenter="showExplain('e-sex')" ontouchstart="showExplain('e-sex')" onmouseleave="hideExplain()">
+                <td>Male sex, n (%)</td>
+                <td>44 (53.0%)</td>
+                <td>26 (63.4%)</td>
+                <td>18 (42.9%)</td>
+                <td><span class="ns-badge">0.076</span></td>
+              </tr>
+              <tr class="hoverable" onmouseenter="showExplain('e-bmi')" ontouchstart="showExplain('e-bmi')" onmouseleave="hideExplain()">
+                <td>BMI (kg/m²), median (IQR)</td>
+                <td>27.4 (23.3–31.5)</td>
+                <td>27.3 (22.9–31.2)</td>
+                <td>27.6 (23.8–31.8)</td>
+                <td><span class="ns-badge">0.880</span></td>
+              </tr>
+              <tr class="hoverable" onmouseenter="showExplain('e-smoke')" ontouchstart="showExplain('e-smoke')" onmouseleave="hideExplain()">
+                <td>Smoking (non-smoker)</td>
+                <td>65 (78.3%)</td>
+                <td>33 (80.5%)</td>
+                <td>32 (76.2%)</td>
+                <td><span class="ns-badge">0.777</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-            <tr class="hoverable" onmouseenter="showExplain('e-age')" onmouseleave="hideExplain()">
-              <td>Age (years), median (IQR)</td>
-              <td>64.0 (44.0–75.0)</td>
-              <td>67.0 (52.0–76.0)</td>
-              <td>58.0 (40.0–72.0)</td>
-              <td><span class="sig-badge">0.033 ✓</span></td>
-            </tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-sex')" onmouseleave="hideExplain()">
-              <td>Male sex, n (%)</td>
-              <td>44 (53.0%)</td>
-              <td>26 (63.4%)</td>
-              <td>18 (42.9%)</td>
-              <td><span class="ns-badge">0.076</span></td>
-            </tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-bmi')" onmouseleave="hideExplain()">
-              <td>BMI (kg/m²), median (IQR)</td>
-              <td>27.4 (23.3–31.5)</td>
-              <td>27.3 (22.9–31.2)</td>
-              <td>27.6 (23.8–31.8)</td>
-              <td><span class="ns-badge">0.880</span></td>
-            </tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-smoke')" onmouseleave="hideExplain()">
-              <td>Smoking (non-smoker)</td>
-              <td>65 (78.3%)</td>
-              <td>33 (80.5%)</td>
-              <td>32 (76.2%)</td>
-              <td><span class="ns-badge">0.777</span></td>
-            </tr>
+      <!-- ── DIALYSIS CHARACTERISTICS ── -->
+      <div class="sub-section">
+        <div class="sub-section-header">
+          <span class="sh-accent">02 ·</span> Dialysis Characteristics
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Characteristic</th>
+                <th>Total (N=83)</th>
+                <th>High &gt;61.8 ng/L (n=41)</th>
+                <th>Low ≤61.8 ng/L (n=42)</th>
+                <th>p-value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="hoverable" onmouseenter="showExplain('e-dur')" ontouchstart="showExplain('e-dur')" onmouseleave="hideExplain()">
+                <td>Dialysis duration (months)</td>
+                <td>51.6 (26.9–92.5)</td>
+                <td>51.8 (33.7–92.2)</td>
+                <td>50.6 (24.0–92.8)</td>
+                <td><span class="ns-badge">0.050*</span></td>
+              </tr>
+              <tr class="hoverable" onmouseenter="showExplain('e-ktv')" ontouchstart="showExplain('e-ktv')" onmouseleave="hideExplain()">
+                <td>Kt/V (urea clearance)</td>
+                <td>1.19 (1.02–1.37)</td>
+                <td>1.13 (1.00–1.39)</td>
+                <td>1.25 (1.08–1.50)</td>
+                <td><span class="ns-badge">0.849</span></td>
+              </tr>
+              <tr class="hoverable" onmouseenter="showExplain('e-uf')" ontouchstart="showExplain('e-uf')" onmouseleave="hideExplain()">
+                <td>Ultrafiltration volume (mL)</td>
+                <td>2614 (2270–3310)</td>
+                <td>2615 (2281–3255)</td>
+                <td>2577 (2262–3362)</td>
+                <td><span class="sig-badge">0.040 ✓</span></td>
+              </tr>
+              <tr class="hoverable" onmouseenter="showExplain('e-access')" ontouchstart="showExplain('e-access')" onmouseleave="hideExplain()">
+                <td>Vascular access (AV fistula)</td>
+                <td>69 (83.1%)</td>
+                <td>36 (87.8%)</td>
+                <td>33 (78.6%)</td>
+                <td><span class="ns-badge">0.517</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-            <tr class="group-header"><td colspan="5">Dialysis Characteristics</td></tr>
+      <!-- ── COMORBIDITIES ── -->
+      <div class="sub-section">
+        <div class="sub-section-header">
+          <span class="sh-accent">03 ·</span> Comorbidities
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Characteristic</th>
+                <th>Total (N=83)</th>
+                <th>High &gt;61.8 ng/L (n=41)</th>
+                <th>Low ≤61.8 ng/L (n=42)</th>
+                <th>p-value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="hoverable" onmouseenter="showExplain('e-dm')" ontouchstart="showExplain('e-dm')" onmouseleave="hideExplain()">
+                <td>Diabetes mellitus, n (%)</td>
+                <td>41 (49.4%)</td>
+                <td>22 (53.7%)</td>
+                <td>19 (45.2%)</td>
+                <td><span class="ns-badge">0.443</span></td>
+              </tr>
+              <tr class="hoverable" onmouseenter="showExplain('e-htn')" ontouchstart="showExplain('e-htn')" onmouseleave="hideExplain()">
+                <td>Hypertension, n (%)</td>
+                <td>57 (68.7%)</td>
+                <td>28 (68.3%)</td>
+                <td>29 (69.0%)</td>
+                <td><span class="ns-badge">0.941</span></td>
+              </tr>
+              <tr class="hoverable" onmouseenter="showExplain('e-ihd')" ontouchstart="showExplain('e-ihd')" onmouseleave="hideExplain()">
+                <td>Ischaemic heart disease, n (%)</td>
+                <td>21 (25.3%)</td>
+                <td>13 (31.7%)</td>
+                <td>8 (19.0%)</td>
+                <td><span class="ns-badge">0.185</span></td>
+              </tr>
+              <tr class="hoverable" onmouseenter="showExplain('e-cva')" ontouchstart="showExplain('e-cva')" onmouseleave="hideExplain()">
+                <td>Cerebrovascular accident, n (%)</td>
+                <td>7 (8.4%)</td>
+                <td>6 (14.6%)</td>
+                <td>1 (2.4%)</td>
+                <td><span class="sig-badge">0.045 ✓</span></td>
+              </tr>
+              <tr class="hoverable" onmouseenter="showExplain('e-hf')" ontouchstart="showExplain('e-hf')" onmouseleave="hideExplain()">
+                <td>Heart failure, n (%)</td>
+                <td>6 (7.2%)</td>
+                <td>3 (7.3%)</td>
+                <td>3 (7.1%)</td>
+                <td><span class="ns-badge">0.976</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-            <tr class="hoverable" onmouseenter="showExplain('e-dur')" onmouseleave="hideExplain()">
-              <td>Dialysis duration (months)</td>
-              <td>51.6 (26.9–92.5)</td>
-              <td>51.8 (33.7–92.2)</td>
-              <td>50.6 (24.0–92.8)</td>
-              <td><span class="ns-badge">0.050*</span></td>
-            </tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-ktv')" onmouseleave="hideExplain()">
-              <td>Kt/V (urea clearance)</td>
-              <td>1.19 (1.02–1.37)</td>
-              <td>1.13 (1.00–1.39)</td>
-              <td>1.25 (1.08–1.50)</td>
-              <td><span class="ns-badge">0.849</span></td>
-            </tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-uf')" onmouseleave="hideExplain()">
-              <td>Ultrafiltration volume (mL)</td>
-              <td>2614 (2270–3310)</td>
-              <td>2615 (2281–3255)</td>
-              <td>2577 (2262–3362)</td>
-              <td><span class="sig-badge">0.040 ✓</span></td>
-            </tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-access')" onmouseleave="hideExplain()">
-              <td>Vascular access (AV fistula)</td>
-              <td>69 (83.1%)</td>
-              <td>36 (87.8%)</td>
-              <td>33 (78.6%)</td>
-              <td><span class="ns-badge">0.517</span></td>
-            </tr>
-
-            <tr class="group-header"><td colspan="5">Comorbidities</td></tr>
-
-            <tr class="hoverable" onmouseenter="showExplain('e-dm')" onmouseleave="hideExplain()">
-              <td>Diabetes mellitus, n (%)</td>
-              <td>41 (49.4%)</td>
-              <td>22 (53.7%)</td>
-              <td>19 (45.2%)</td>
-              <td><span class="ns-badge">0.443</span></td>
-            </tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-htn')" onmouseleave="hideExplain()">
-              <td>Hypertension, n (%)</td>
-              <td>57 (68.7%)</td>
-              <td>28 (68.3%)</td>
-              <td>29 (69.0%)</td>
-              <td><span class="ns-badge">0.941</span></td>
-            </tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-ihd')" onmouseleave="hideExplain()">
-              <td>Ischaemic heart disease, n (%)</td>
-              <td>21 (25.3%)</td>
-              <td>13 (31.7%)</td>
-              <td>8 (19.0%)</td>
-              <td><span class="ns-badge">0.185</span></td>
-            </tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-cva')" onmouseleave="hideExplain()">
-              <td>Cerebrovascular accident, n (%)</td>
-              <td>7 (8.4%)</td>
-              <td>6 (14.6%)</td>
-              <td>1 (2.4%)</td>
-              <td><span class="sig-badge">0.045 ✓</span></td>
-            </tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-hf')" onmouseleave="hideExplain()">
-              <td>Heart failure, n (%)</td>
-              <td>6 (7.2%)</td>
-              <td>3 (7.3%)</td>
-              <td>3 (7.1%)</td>
-              <td><span class="ns-badge">0.976</span></td>
-            </tr>
-
-            <tr class="group-header"><td colspan="5">Laboratory Values</td></tr>
-
-            <tr class="hoverable" onmouseenter="showExplain('e-trop')" onmouseleave="hideExplain()">
-              <td>hs-Troponin I (ng/L)*</td>
-              <td>61.8 (41.2–89.6)</td>
-              <td>90.0 (74.8–109.0)</td>
-              <td>41.2 (31.7–51.3)</td>
-              <td><span class="sig-badge">By design</span></td>
-            </tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-crp')" onmouseleave="hideExplain()">
-              <td>CRP (mg/L), median (IQR)</td>
-              <td>8.4 (2.3–14.8)</td>
-              <td>8.9 (3.5–15.4)</td>
-              <td>8.0 (1.5–14.2)</td>
-              <td><span class="ns-badge">0.178</span></td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- ── LABORATORY VALUES ── -->
+      <div class="sub-section">
+        <div class="sub-section-header">
+          <span class="sh-accent">04 ·</span> Laboratory Values
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Characteristic</th>
+                <th>Total (N=83)</th>
+                <th>High &gt;61.8 ng/L (n=41)</th>
+                <th>Low ≤61.8 ng/L (n=42)</th>
+                <th>p-value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="hoverable" onmouseenter="showExplain('e-trop')" ontouchstart="showExplain('e-trop')" onmouseleave="hideExplain()">
+                <td>hs-Troponin I (ng/L)*</td>
+                <td>61.8 (41.2–89.6)</td>
+                <td>90.0 (74.8–109.0)</td>
+                <td>41.2 (31.7–51.3)</td>
+                <td><span class="sig-badge">By design</span></td>
+              </tr>
+              <tr class="hoverable" onmouseenter="showExplain('e-crp')" ontouchstart="showExplain('e-crp')" onmouseleave="hideExplain()">
+                <td>CRP (mg/L), median (IQR)</td>
+                <td>8.4 (2.3–14.8)</td>
+                <td>8.9 (3.5–15.4)</td>
+                <td>8.0 (1.5–14.2)</td>
+                <td><span class="ns-badge">0.178</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div class="footnote">
@@ -543,95 +606,81 @@
     <!-- Explanation Panel -->
     <div class="explain-panel">
       <h4>Data Point Explanation</h4>
-      <p class="explain-default" id="t1-default">Hover over any row in the table to see a detailed explanation of that data point and its clinical significance.</p>
+      <p class="explain-default" id="t1-default">Tap any row in the table to see a detailed explanation of that data point and its clinical significance.</p>
 
       <div class="explain-content" id="e-age">
         <h5>Age</h5>
-        <p>The high-troponin group was significantly older (median 67 vs. 58 years). Age is one of the most consistent drivers of troponin elevation in ESRD — cumulative exposure to uraemic toxins, myocardial fibrosis, and LV remodelling over decades of kidney disease leads to progressive cardiomyocyte damage and release.</p>
+        <p>The high-troponin group was significantly older (median 67 vs. 58 years). Age is one of the most consistent drivers of troponin elevation in ESRD — cumulative exposure to uraemic toxins, myocardial fibrosis, and LV remodelling over decades leads to progressive cardiomyocyte damage and release.</p>
         <span class="p-val p-sig">p = 0.033 — Significant ✓</span>
       </div>
-
       <div class="explain-content" id="e-sex">
         <h5>Male Sex</h5>
-        <p>Males showed a trend toward higher troponin (63.4% vs 42.9%), but this did not reach statistical significance. The trend is biologically plausible — males may have greater LV mass and different myocardial remodelling responses to ESRD. However, with n=83 this study was underpowered to confirm a sex effect.</p>
+        <p>Males showed a trend toward higher troponin (63.4% vs 42.9%), but this did not reach significance. The trend is biologically plausible — males may have greater LV mass and different myocardial remodelling responses. However, with n=83 this study was underpowered to confirm a sex effect.</p>
         <span class="p-val p-ns">p = 0.076 — Not significant</span>
       </div>
-
       <div class="explain-content" id="e-bmi">
         <h5>Body Mass Index (BMI)</h5>
-        <p>BMI was virtually identical between groups (27.3 vs 27.6 kg/m²), indicating that body composition and obesity do not independently drive troponin elevation in this cohort. Both groups were in the overweight range, consistent with the general haemodialysis population.</p>
+        <p>BMI was virtually identical between groups (27.3 vs 27.6 kg/m²), indicating that body composition and obesity do not independently drive troponin elevation in this cohort. Both groups were in the overweight range, consistent with the haemodialysis population.</p>
         <span class="p-val p-ns">p = 0.880 — Not significant</span>
       </div>
-
       <div class="explain-content" id="e-smoke">
         <h5>Smoking Status</h5>
-        <p>Smoking distribution was nearly identical between groups (~78% non-smokers in both). This null finding suggests that smoking history does not contribute meaningfully to chronic troponin elevation in established ESRD, possibly because other mechanisms (uraemia, haemodynamic stress) dominate.</p>
+        <p>Smoking distribution was nearly identical (~78% non-smokers in both). Smoking history does not contribute meaningfully to chronic troponin elevation in established ESRD, likely because uraemic and haemodynamic mechanisms dominate.</p>
         <span class="p-val p-ns">p = 0.777 — Not significant</span>
       </div>
-
       <div class="explain-content" id="e-dur">
         <h5>Dialysis Duration</h5>
-        <p>Dialysis duration was almost identical between groups (~51.7 months both). The p-value of 0.050 falls exactly at the threshold and was pre-specified as non-significant. Although longer dialysis theoretically means more cumulative exposure, the Spearman correlation (rs = +0.12, p = 0.279) also confirmed no linear relationship.</p>
+        <p>Dialysis duration was almost identical (~51.7 months both). The p = 0.050 falls exactly at threshold and was pre-specified as non-significant. Spearman correlation (rs = +0.12, p = 0.279) also confirmed no linear relationship.</p>
         <span class="p-val p-ns">p = 0.050 — Not significant (borderline)</span>
       </div>
-
       <div class="explain-content" id="e-ktv">
         <h5>Kt/V (Dialysis Adequacy)</h5>
-        <p>As a median-split comparison, Kt/V did not differ significantly (1.13 vs 1.25, p = 0.849). However, this is misleading — median dichotomisation loses statistical power. As a continuous variable in Spearman correlation (rs = −0.34, p = 0.001) and the multivariable GLM (p = 0.051), Kt/V shows a clinically meaningful inverse relationship: a 0.1-unit drop in Kt/V ≈ 6.5% rise in troponin.</p>
+        <p>As a median-split, Kt/V did not differ significantly (1.13 vs 1.25, p = 0.849). However, this is misleading — dichotomisation loses power. As a continuous variable: Spearman rs = −0.34 (p = 0.001) and GLM (p = 0.051) confirm a clinically meaningful inverse relationship: a 0.1-unit drop in Kt/V ≈ 6.5% rise in troponin.</p>
         <span class="p-val p-ns">p = 0.849 as dichotomous — misleading; see Table 3</span>
       </div>
-
       <div class="explain-content" id="e-uf">
         <h5>Ultrafiltration Volume</h5>
-        <p>The high-troponin group had significantly higher UF volumes (2615 vs 2577 mL, p = 0.040). Larger UF volumes reflect greater fluid overload between dialysis sessions — this haemodynamic stress (volume overload → wall stress → myocardial stretch) may drive troponin release through myocardial strain, even in the absence of acute ischaemia.</p>
+        <p>The high-troponin group had significantly higher UF volumes (2615 vs 2577 mL, p = 0.040). Larger UF reflects greater fluid overload between sessions — haemodynamic stress (volume overload → wall stress → myocardial stretch) may drive troponin release through myocardial strain, even without acute ischaemia.</p>
         <span class="p-val p-sig">p = 0.040 — Significant ✓</span>
       </div>
-
       <div class="explain-content" id="e-access">
         <h5>Vascular Access</h5>
-        <p>No significant difference in vascular access type between groups. AV fistulas were most common (~83% overall) in both groups, which is expected in a well-established haemodialysis cohort. Access type does not appear to influence troponin levels.</p>
+        <p>No significant difference in vascular access type. AV fistulas were most common (~83%) in both groups. Access type does not appear to influence troponin levels in this cohort.</p>
         <span class="p-val p-ns">p = 0.517 — Not significant</span>
       </div>
-
       <div class="explain-content" id="e-dm">
         <h5>Diabetes Mellitus</h5>
-        <p>Diabetes was present in ~50% overall, with slightly higher prevalence in the high group (53.7% vs 45.2%), but not statistically significant. Notably, in the multivariable GLM, diabetes showed a borderline trend (B = +0.301, p = 0.052), suggesting a possible independent contribution that this study was underpowered to confirm.</p>
+        <p>Diabetes present in ~50% overall, slightly higher in high group (53.7% vs 45.2%), not statistically significant. In the multivariable GLM, diabetes showed a borderline trend (B = +0.301, p = 0.052), suggesting a possible independent contribution the study was underpowered to confirm.</p>
         <span class="p-val p-ns">p = 0.443 — Not significant</span>
       </div>
-
       <div class="explain-content" id="e-htn">
         <h5>Hypertension</h5>
-        <p>Hypertension prevalence was identical between groups (68.3% vs 69.0%). Despite hypertension being a major driver of LVH and myocardial disease in ESRD, it does not independently discriminate high from low troponin groups in this cohort, likely because it is near-universal in the population.</p>
+        <p>Hypertension prevalence was identical between groups (68.3% vs 69.0%). Despite being a major driver of LVH, it does not discriminate high from low troponin groups — likely because it is near-universal in the ESRD population.</p>
         <span class="p-val p-ns">p = 0.941 — Not significant</span>
       </div>
-
       <div class="explain-content" id="e-ihd">
         <h5>Ischaemic Heart Disease</h5>
-        <p>IHD was more prevalent in the high-troponin group (31.7% vs 19.0%) — a biologically plausible finding since prior myocardial injury leads to ongoing cardiomyocyte damage — but the difference did not reach significance, likely due to small sample size.</p>
+        <p>IHD was more prevalent in the high-troponin group (31.7% vs 19.0%) — biologically plausible — but did not reach significance, likely due to small sample size.</p>
         <span class="p-val p-ns">p = 0.185 — Not significant</span>
       </div>
-
       <div class="explain-content" id="e-cva">
         <h5>Cerebrovascular Accident (Stroke)</h5>
-        <p>A history of stroke was strikingly more common in the high-troponin group (14.6% vs 2.4%, p = 0.045). This likely reflects shared pathophysiology: both troponin elevation and stroke in ESRD are driven by the same substrate of uraemic cardiomyopathy, endothelial dysfunction, and systemic atherosclerosis — not that one causes the other.</p>
+        <p>A history of stroke was strikingly more common in the high-troponin group (14.6% vs 2.4%, p = 0.045). This reflects shared pathophysiology: both troponin elevation and stroke in ESRD are driven by uraemic cardiomyopathy, endothelial dysfunction, and systemic atherosclerosis.</p>
         <span class="p-val p-sig">p = 0.045 — Significant ✓</span>
       </div>
-
       <div class="explain-content" id="e-hf">
         <h5>Heart Failure</h5>
-        <p>Heart failure prevalence was identical between groups (7.3% vs 7.1%). This null finding is counterintuitive, but may reflect that heart failure in ESRD is often subclinical or underdiagnosed. Additionally, with only 6 cases total, there was insufficient power to detect a difference.</p>
+        <p>Heart failure prevalence was identical between groups (7.3% vs 7.1%). With only 6 cases total, there was insufficient power to detect a difference. Heart failure in ESRD is often subclinical or underdiagnosed.</p>
         <span class="p-val p-ns">p = 0.976 — Not significant</span>
       </div>
-
       <div class="explain-content" id="e-trop">
         <h5>hs-Troponin I (Defining Variable)</h5>
-        <p>The groups were defined by the cohort median of 61.8 ng/L — over 4× the standard diagnostic URL of 14 ng/L. Critically, 98.8% of ALL patients exceeded 14 ng/L, meaning nearly every patient in a standard clinical context would have a "positive" troponin — demonstrating that the standard ACS cut-off is clinically meaningless in haemodialysis patients.</p>
+        <p>Groups defined by the cohort median of 61.8 ng/L — over 4× the standard URL of 14 ng/L. Critically, 98.8% of ALL patients exceeded 14 ng/L, demonstrating that the standard ACS cut-off is clinically meaningless in haemodialysis patients.</p>
         <span class="p-val p-sig">Groups defined by this cut-off — by design</span>
       </div>
-
       <div class="explain-content" id="e-crp">
         <h5>C-Reactive Protein (CRP)</h5>
-        <p>CRP, a marker of systemic inflammation, did not differ between groups (8.9 vs 8.0 mg/L, p = 0.178). Spearman correlation also showed no linear relationship (rs = +0.06, p = 0.593). This suggests that acute or chronic systemic inflammation alone is not the primary mechanism driving troponin elevation in this population — structural and haemodynamic mechanisms are more likely.</p>
+        <p>CRP did not differ between groups (8.9 vs 8.0 mg/L, p = 0.178). Spearman correlation also showed no relationship (rs = +0.06, p = 0.593). Systemic inflammation alone is not the primary mechanism driving troponin elevation — structural and haemodynamic mechanisms dominate.</p>
         <span class="p-val p-ns">p = 0.178 — Not significant</span>
       </div>
     </div>
@@ -658,7 +707,7 @@
   <div class="section-layout">
     <div>
       <div class="intro-card">
-        Electrocardiographic analysis of <strong>83 patients</strong> by troponin group. ECG abnormalities were <strong>common across both groups</strong> — confirming widespread cardiac disease in ESRD — but most parameters did <strong>not</strong> differ significantly between high and low troponin groups. The only exception was <strong>QRS duration</strong> (p = 0.046).
+        Electrocardiographic analysis of <strong>83 patients</strong> by troponin group. ECG abnormalities were <strong>common across both groups</strong> — confirming widespread cardiac disease in ESRD — but most parameters did <strong>not</strong> differ significantly. The only exception was <strong>QRS duration</strong> (p = 0.046).
       </div>
 
       <div class="table-wrapper">
@@ -673,101 +722,47 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="group-header"><td colspan="5">Rhythm</td></tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-sr')" onmouseleave="hideExplain()">
-              <td>Sinus rhythm, n (%)</td>
-              <td>71 (85.5%)</td>
-              <td>33 (80.5%)</td>
-              <td>38 (90.5%)</td>
-              <td><span class="ns-badge">0.379</span></td>
+            <tr style="background:#F5F5F5;"><td colspan="5" style="padding:0.45rem 1rem;font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#333;">Rhythm</td></tr>
+            <tr class="hoverable" onmouseenter="showExplain('e-sr')" ontouchstart="showExplain('e-sr')" onmouseleave="hideExplain()">
+              <td>Sinus rhythm, n (%)</td><td>71 (85.5%)</td><td>33 (80.5%)</td><td>38 (90.5%)</td><td><span class="ns-badge">0.379</span></td>
             </tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-af')" onmouseleave="hideExplain()">
-              <td>Atrial fibrillation/flutter, n (%)</td>
-              <td>10 (12.0%)</td>
-              <td>7 (17.1%)</td>
-              <td>3 (7.1%)</td>
-              <td><span class="ns-badge">—</span></td>
+            <tr class="hoverable" onmouseenter="showExplain('e-af')" ontouchstart="showExplain('e-af')" onmouseleave="hideExplain()">
+              <td>Atrial fibrillation/flutter, n (%)</td><td>10 (12.0%)</td><td>7 (17.1%)</td><td>3 (7.1%)</td><td><span class="ns-badge">—</span></td>
             </tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-paced')" onmouseleave="hideExplain()">
-              <td>Paced rhythm, n (%)</td>
-              <td>2 (2.4%)</td>
-              <td>1 (2.4%)</td>
-              <td>1 (2.4%)</td>
-              <td><span class="ns-badge">—</span></td>
+            <tr class="hoverable" onmouseenter="showExplain('e-paced')" ontouchstart="showExplain('e-paced')" onmouseleave="hideExplain()">
+              <td>Paced rhythm, n (%)</td><td>2 (2.4%)</td><td>1 (2.4%)</td><td>1 (2.4%)</td><td><span class="ns-badge">—</span></td>
             </tr>
-
-            <tr class="group-header"><td colspan="5">ECG Intervals (ms, median IQR)</td></tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-qtc')" onmouseleave="hideExplain()">
-              <td>QTc interval (N=83)</td>
-              <td>440 (418–458)</td>
-              <td>430 (390–470)</td>
-              <td>445 (418–457)</td>
-              <td><span class="ns-badge">0.593</span></td>
+            <tr style="background:#F5F5F5;"><td colspan="5" style="padding:0.45rem 1rem;font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#333;">ECG Intervals (ms, median IQR)</td></tr>
+            <tr class="hoverable" onmouseenter="showExplain('e-qtc')" ontouchstart="showExplain('e-qtc')" onmouseleave="hideExplain()">
+              <td>QTc interval (N=83)</td><td>440 (418–458)</td><td>430 (390–470)</td><td>445 (418–457)</td><td><span class="ns-badge">0.593</span></td>
             </tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-qrs')" onmouseleave="hideExplain()">
-              <td>QRS duration (N=83)</td>
-              <td>100 (88–112)</td>
-              <td>94 (62–126)</td>
-              <td>100 (80–100)</td>
-              <td><span class="sig-badge">0.046 ✓</span></td>
+            <tr class="hoverable" onmouseenter="showExplain('e-qrs')" ontouchstart="showExplain('e-qrs')" onmouseleave="hideExplain()">
+              <td>QRS duration (N=83)</td><td>100 (88–112)</td><td>94 (62–126)</td><td>100 (80–100)</td><td><span class="sig-badge">0.046 ✓</span></td>
             </tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-pq')" onmouseleave="hideExplain()">
-              <td>PQ interval (N=72)</td>
-              <td>169 (150–187)</td>
-              <td>172 (150–195)</td>
-              <td>163 (133–163)</td>
-              <td><span class="ns-badge">0.641</span></td>
+            <tr class="hoverable" onmouseenter="showExplain('e-pq')" ontouchstart="showExplain('e-pq')" onmouseleave="hideExplain()">
+              <td>PQ interval (N=72)</td><td>169 (150–187)</td><td>172 (150–195)</td><td>163 (133–163)</td><td><span class="ns-badge">0.641</span></td>
             </tr>
-
-            <tr class="group-header"><td colspan="5">Binary ECG Findings</td></tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-std')" onmouseleave="hideExplain()">
-              <td>ST-segment depression (STD)</td>
-              <td>24 (28.9%)</td>
-              <td>11 (26.8%)</td>
-              <td>13 (31.0%)</td>
-              <td><span class="ns-badge">0.679</span></td>
+            <tr style="background:#F5F5F5;"><td colspan="5" style="padding:0.45rem 1rem;font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#333;">Binary ECG Findings</td></tr>
+            <tr class="hoverable" onmouseenter="showExplain('e-std')" ontouchstart="showExplain('e-std')" onmouseleave="hideExplain()">
+              <td>ST-segment depression (STD)</td><td>24 (28.9%)</td><td>11 (26.8%)</td><td>13 (31.0%)</td><td><span class="ns-badge">0.679</span></td>
             </tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-twi')" onmouseleave="hideExplain()">
-              <td>T-wave inversion (TWI)</td>
-              <td>36 (43.4%)</td>
-              <td>19 (46.3%)</td>
-              <td>17 (40.5%)</td>
-              <td><span class="ns-badge">0.590</span></td>
+            <tr class="hoverable" onmouseenter="showExplain('e-twi')" ontouchstart="showExplain('e-twi')" onmouseleave="hideExplain()">
+              <td>T-wave inversion (TWI)</td><td>36 (43.4%)</td><td>19 (46.3%)</td><td>17 (40.5%)</td><td><span class="ns-badge">0.590</span></td>
             </tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-lvstrain')" onmouseleave="hideExplain()">
-              <td>LV strain pattern (STD + TWI lateral)</td>
-              <td>21 (25.3%)</td>
-              <td>10 (24.4%)</td>
-              <td>11 (26.2%)</td>
-              <td><span class="ns-badge">0.850</span></td>
+            <tr class="hoverable" onmouseenter="showExplain('e-lvstrain')" ontouchstart="showExplain('e-lvstrain')" onmouseleave="hideExplain()">
+              <td>LV strain pattern (STD + TWI lateral)</td><td>21 (25.3%)</td><td>10 (24.4%)</td><td>11 (26.2%)</td><td><span class="ns-badge">0.850</span></td>
             </tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-lvh')" onmouseleave="hideExplain()">
-              <td>LV hypertrophy (LVH), any criterion</td>
-              <td>39 (47.0%)</td>
-              <td>18 (43.9%)</td>
-              <td>21 (50.0%)</td>
-              <td><span class="ns-badge">0.578</span></td>
+            <tr class="hoverable" onmouseenter="showExplain('e-lvh')" ontouchstart="showExplain('e-lvh')" onmouseleave="hideExplain()">
+              <td>LV hypertrophy (LVH), any criterion</td><td>39 (47.0%)</td><td>18 (43.9%)</td><td>21 (50.0%)</td><td><span class="ns-badge">0.578</span></td>
             </tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-qwave')" onmouseleave="hideExplain()">
-              <td>Pathological Q waves</td>
-              <td>7 (8.4%)</td>
-              <td>5 (12.2%)</td>
-              <td>2 (4.8%)</td>
-              <td><span class="ns-badge">0.265</span></td>
+            <tr class="hoverable" onmouseenter="showExplain('e-qwave')" ontouchstart="showExplain('e-qwave')" onmouseleave="hideExplain()">
+              <td>Pathological Q waves</td><td>7 (8.4%)</td><td>5 (12.2%)</td><td>2 (4.8%)</td><td><span class="ns-badge">0.265</span></td>
             </tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-lbbb')" onmouseleave="hideExplain()">
-              <td>Left bundle branch block (LBBB)</td>
-              <td>3 (3.6%)</td>
-              <td>2 (4.9%)</td>
-              <td>1 (2.4%)</td>
-              <td><span class="ns-badge">0.830</span></td>
+            <tr class="hoverable" onmouseenter="showExplain('e-lbbb')" ontouchstart="showExplain('e-lbbb')" onmouseleave="hideExplain()">
+              <td>Left bundle branch block (LBBB)</td><td>3 (3.6%)</td><td>2 (4.9%)</td><td>1 (2.4%)</td><td><span class="ns-badge">0.830</span></td>
             </tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-qtcprol')" onmouseleave="hideExplain()">
-              <td>QTc prolongation (&gt;440 ms)</td>
-              <td>24 (28.9%)</td>
-              <td>12 (29.3%)</td>
-              <td>12 (28.6%)</td>
-              <td><span class="ns-badge">0.944</span></td>
+            <tr class="hoverable" onmouseenter="showExplain('e-qtcprol')" ontouchstart="showExplain('e-qtcprol')" onmouseleave="hideExplain()">
+              <td>QTc prolongation (&gt;440 ms)</td><td>24 (28.9%)</td><td>12 (29.3%)</td><td>12 (28.6%)</td><td><span class="ns-badge">0.944</span></td>
             </tr>
           </tbody>
         </table>
@@ -780,83 +775,71 @@
 
     <div class="explain-panel">
       <h4>Data Point Explanation</h4>
-      <p class="explain-default" id="t2-default">Hover over any row in the table to see a detailed explanation of that ECG finding and its clinical significance in ESRD.</p>
+      <p class="explain-default" id="t2-default">Tap any row in the table to see a detailed explanation of that ECG finding and its clinical significance in ESRD.</p>
 
       <div class="explain-content" id="e-sr">
         <h5>Sinus Rhythm</h5>
-        <p>80.5% of the high-troponin group maintained sinus rhythm vs 90.5% in the low group, but this was not significant (p = 0.379). The higher rate of non-sinus rhythm in the high group is driven largely by AF/flutter clustering in that group — a pattern consistent with elevated troponin reflecting greater atrial and ventricular remodelling.</p>
+        <p>80.5% of the high-troponin group maintained sinus rhythm vs 90.5% in the low group, but this was not significant (p = 0.379). The higher rate of non-sinus rhythm in the high group is driven largely by AF/flutter clustering — consistent with elevated troponin reflecting greater atrial and ventricular remodelling.</p>
         <span class="p-val p-ns">p = 0.379 — Not significant</span>
       </div>
-
       <div class="explain-content" id="e-af">
         <h5>Atrial Fibrillation / Flutter</h5>
-        <p>AF/flutter was more than twice as prevalent in the high-troponin group (17.1% vs 7.1%), though no formal p-value was calculated due to small expected counts. In ESRD, AF is associated with volume overload, electrolyte disturbances, and structural atrial disease — all of which also promote troponin elevation. The pattern is clinically consistent even if not formally significant here.</p>
+        <p>AF/flutter was more than twice as prevalent in the high-troponin group (17.1% vs 7.1%), though no formal p-value was calculated due to small expected counts. In ESRD, AF is associated with volume overload, electrolyte disturbances, and structural atrial disease — all of which also promote troponin elevation.</p>
         <span class="p-val p-ns">No p-value (small counts)</span>
       </div>
-
       <div class="explain-content" id="e-paced">
         <h5>Paced Rhythm</h5>
-        <p>Only 2 patients (one per group) had paced rhythms — far too few to draw any conclusions. Paced rhythm also confounds ECG interpretation (ST segments and QRS morphology are unreliable), so these patients were counted but their ECG morphology data should be interpreted cautiously.</p>
+        <p>Only 2 patients (one per group) had paced rhythms — far too few to draw any conclusions. Paced rhythm also confounds ECG interpretation, so these patients' ECG morphology data should be interpreted cautiously.</p>
         <span class="p-val p-ns">n = 2 — Insufficient for analysis</span>
       </div>
-
       <div class="explain-content" id="e-qtc">
         <h5>QTc Interval</h5>
-        <p>Despite the theoretical concern that higher troponin might accompany longer QTc (through myocardial fibrosis affecting repolarisation), there was no significant difference between groups (430 vs 445 ms, p = 0.593). The wide IQRs in the high-troponin group (390–470 ms) suggest high variability, likely due to electrolyte fluctuations inherent to haemodialysis.</p>
+        <p>Despite the theoretical concern that higher troponin might accompany longer QTc (through myocardial fibrosis affecting repolarisation), there was no significant difference between groups (430 vs 445 ms, p = 0.593). Wide IQRs in the high group suggest electrolyte fluctuations inherent to haemodialysis drive variability.</p>
         <span class="p-val p-ns">p = 0.593 — Not significant</span>
       </div>
-
       <div class="explain-content" id="e-qrs">
         <h5>QRS Duration ★ Significant</h5>
-        <p>This was the only ECG interval to differ significantly between groups (94 ms high vs 100 ms low, p = 0.046). Paradoxically, the high-troponin group had a <em>shorter</em> median QRS. The wide IQRs (62–126 ms in high group) suggest high within-group variability. This may reflect a subset of patients with intraventricular conduction defects (LBBB, paced rhythm) skewing the high group's IQR rather than a true biological effect. Sensitivity analyses in Table 3 (rs = −0.22) confirm this borderline finding.</p>
+        <p>The only ECG interval to differ significantly (94 ms high vs 100 ms low, p = 0.046). Paradoxically, the high-troponin group had a shorter median QRS. Wide IQRs (62–126 ms in high group) suggest high within-group variability — likely a subset with intraventricular conduction defects skewing the IQR rather than a true biological effect.</p>
         <span class="p-val p-sig">p = 0.046 — Significant ✓ (interpret cautiously)</span>
       </div>
-
       <div class="explain-content" id="e-pq">
         <h5>PQ Interval</h5>
-        <p>Available in 72/83 patients (AF and paced rhythm patients excluded as PQ is unmeasurable). No significant difference between groups (172 vs 163 ms, p = 0.641). PR interval prolongation, which would suggest AV nodal disease, does not track with troponin levels in this cohort.</p>
+        <p>Available in 72/83 patients (AF and paced rhythm patients excluded). No significant difference between groups (172 vs 163 ms, p = 0.641). PR interval prolongation suggesting AV nodal disease does not track with troponin levels in this cohort.</p>
         <span class="p-val p-ns">p = 0.641 — Not significant</span>
       </div>
-
       <div class="explain-content" id="e-std">
         <h5>ST-Segment Depression (STD)</h5>
-        <p>Present in ~29% of all patients — a high background prevalence reflecting the uraemic cardiomyopathy substrate. Remarkably, STD was equally distributed between high and low troponin groups (26.8% vs 31.0%, p = 0.679). This confirms that chronic troponin elevation in ESRD does not result from ongoing ischaemia detectable by surface ECG.</p>
+        <p>Present in ~29% of all patients — a high background prevalence reflecting uraemic cardiomyopathy. STD was equally distributed between groups (26.8% vs 31.0%, p = 0.679), confirming that chronic troponin elevation in ESRD does not result from ongoing ischaemia detectable by surface ECG.</p>
         <span class="p-val p-ns">p = 0.679 — Not significant</span>
       </div>
-
       <div class="explain-content" id="e-twi">
         <h5>T-Wave Inversion (TWI)</h5>
-        <p>T-wave inversion was present in 43.4% of all patients — strikingly high compared to the general population, reflecting widespread ventricular strain and repolarisation abnormalities in ESRD. However, TWI did not differ between troponin groups (46.3% vs 40.5%, p = 0.590), suggesting it is a marker of the ESRD substrate generally, not specifically linked to troponin magnitude.</p>
+        <p>T-wave inversion present in 43.4% of all patients — strikingly high, reflecting widespread ventricular strain in ESRD. TWI did not differ between troponin groups (46.3% vs 40.5%, p = 0.590), suggesting it is a marker of the ESRD substrate generally, not specifically linked to troponin magnitude.</p>
         <span class="p-val p-ns">p = 0.590 — Not significant</span>
       </div>
-
       <div class="explain-content" id="e-lvstrain">
         <h5>LV Strain Pattern</h5>
-        <p>Defined as simultaneous STD + TWI in the lateral leads, LV strain was present in 25.3% overall — a clinically significant proportion. Strikingly, the prevalence was nearly identical between troponin groups (24.4% vs 26.2%, p = 0.850). This dissociation between ECG strain pattern and troponin level reinforces that chronic troponin elevation in ESRD reflects sustained structural damage rather than acute ischaemia.</p>
+        <p>Defined as simultaneous STD + TWI in lateral leads, LV strain was present in 25.3% overall. Prevalence was nearly identical between troponin groups (24.4% vs 26.2%, p = 0.850) — reinforcing that chronic troponin elevation in ESRD reflects sustained structural damage, not acute ischaemia.</p>
         <span class="p-val p-ns">p = 0.850 — Not significant</span>
       </div>
-
       <div class="explain-content" id="e-lvh">
         <h5>Left Ventricular Hypertrophy (LVH)</h5>
-        <p>LVH was present in 47% of all patients by ECG criteria — consistent with the known high prevalence in ESRD driven by pressure overload (hypertension, uremia). Importantly, LVH was not more prevalent in the high-troponin group (43.9% vs 50.0%, p = 0.578). This null finding suggests that LVH per se is not the primary mechanism of chronic troponin elevation in ESRD.</p>
+        <p>LVH present in 47% of all patients by ECG criteria — consistent with high ESRD prevalence from pressure overload. Importantly, LVH was not more prevalent in the high-troponin group (43.9% vs 50.0%, p = 0.578), suggesting LVH per se is not the primary mechanism of chronic troponin elevation.</p>
         <span class="p-val p-ns">p = 0.578 — Not significant</span>
       </div>
-
       <div class="explain-content" id="e-qwave">
         <h5>Pathological Q Waves</h5>
-        <p>Q waves (markers of prior transmural MI) were more common in the high-troponin group (12.2% vs 4.8%) but not significantly so (p = 0.265). Included in the multivariable GLM to test for independent effect — the model confirmed no significant independent contribution (B = −0.385, p = 0.146), even adjusting for age, Kt/V, and diabetes.</p>
+        <p>Q waves (markers of prior transmural MI) more common in high-troponin group (12.2% vs 4.8%) but not significantly so (p = 0.265). The multivariable GLM confirmed no significant independent contribution (B = −0.385, p = 0.146), even after adjusting for age, Kt/V, and diabetes.</p>
         <span class="p-val p-ns">p = 0.265 — Not significant</span>
       </div>
-
       <div class="explain-content" id="e-lbbb">
         <h5>Left Bundle Branch Block (LBBB)</h5>
-        <p>LBBB was rare (3 patients total) and equally uncommon in both groups. Too few cases to draw conclusions. LBBB is clinically important as it may cause troponin elevation through mechanical dyssynchrony independent of coronary disease, but this could not be assessed with only 3 cases.</p>
+        <p>LBBB was rare (3 patients total) and equally uncommon in both groups. Too few cases to draw conclusions. LBBB can cause troponin elevation through mechanical dyssynchrony independent of coronary disease, but this could not be assessed with only 3 cases.</p>
         <span class="p-val p-ns">p = 0.830 — Not significant (n too small)</span>
       </div>
-
       <div class="explain-content" id="e-qtcprol">
         <h5>QTc Prolongation (&gt;440 ms)</h5>
-        <p>QTc prolongation affected 28.9% of all patients — a high and clinically concerning prevalence (associated with ventricular arrhythmia risk). However, prevalence was virtually identical between groups (29.3% vs 28.6%, p = 0.944). This striking null finding confirms that chronically elevated troponin and QTc prolongation are independent manifestations of uraemic cardiomyopathy.</p>
+        <p>QTc prolongation affected 28.9% of all patients — a high, clinically concerning prevalence. However, prevalence was virtually identical between groups (29.3% vs 28.6%, p = 0.944), confirming that chronically elevated troponin and QTc prolongation are independent manifestations of uraemic cardiomyopathy.</p>
         <span class="p-val p-ns">p = 0.944 — Not significant</span>
       </div>
     </div>
@@ -897,39 +880,39 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="hoverable" onmouseenter="showExplain('e-c-age')" onmouseleave="hideExplain()">
+            <tr class="hoverable" onmouseenter="showExplain('e-c-age')" ontouchstart="showExplain('e-c-age')" onmouseleave="hideExplain()">
               <td>Age (years)</td>
-              <td style="color:var(--orange);font-weight:700">+0.27</td>
+              <td style="color:var(--orange-dark);font-weight:700">+0.27</td>
               <td><span class="sig-badge">0.015 ✓</span></td>
               <td>Weak positive — older patients have higher troponin</td>
             </tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-c-ktv')" onmouseleave="hideExplain()">
+            <tr class="hoverable" onmouseenter="showExplain('e-c-ktv')" ontouchstart="showExplain('e-c-ktv')" onmouseleave="hideExplain()">
               <td>Kt/V (dialysis adequacy)</td>
-              <td style="color:var(--orange);font-weight:700">−0.34</td>
+              <td style="color:var(--orange-dark);font-weight:700">−0.34</td>
               <td><span class="sig-badge">0.001 ✓</span></td>
               <td>Moderate negative — lower Kt/V → higher troponin</td>
             </tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-c-dur')" onmouseleave="hideExplain()">
+            <tr class="hoverable" onmouseenter="showExplain('e-c-dur')" ontouchstart="showExplain('e-c-dur')" onmouseleave="hideExplain()">
               <td>Dialysis duration (months)</td>
-              <td style="color:#666">+0.12</td>
+              <td style="color:#999">+0.12</td>
               <td><span class="ns-badge">0.279</span></td>
               <td>Not significant</td>
             </tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-c-crp')" onmouseleave="hideExplain()">
+            <tr class="hoverable" onmouseenter="showExplain('e-c-crp')" ontouchstart="showExplain('e-c-crp')" onmouseleave="hideExplain()">
               <td>CRP (mg/L)</td>
-              <td style="color:#666">+0.06</td>
+              <td style="color:#999">+0.06</td>
               <td><span class="ns-badge">0.593</span></td>
               <td>Not significant</td>
             </tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-c-qrs')" onmouseleave="hideExplain()">
+            <tr class="hoverable" onmouseenter="showExplain('e-c-qrs')" ontouchstart="showExplain('e-c-qrs')" onmouseleave="hideExplain()">
               <td>QRS duration (ms)</td>
-              <td style="color:#FFB800">−0.22</td>
+              <td style="color:#886600;font-weight:700">−0.22</td>
               <td><span class="border-badge">0.049 ~</span></td>
               <td>Borderline — weak inverse association</td>
             </tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-c-qtc')" onmouseleave="hideExplain()">
+            <tr class="hoverable" onmouseenter="showExplain('e-c-qtc')" ontouchstart="showExplain('e-c-qtc')" onmouseleave="hideExplain()">
               <td>QTc interval (ms)</td>
-              <td style="color:#666">+0.06</td>
+              <td style="color:#999">+0.06</td>
               <td><span class="ns-badge">0.593</span></td>
               <td>Not significant</td>
             </tr>
@@ -944,41 +927,36 @@
 
     <div class="explain-panel">
       <h4>Data Point Explanation</h4>
-      <p class="explain-default">Hover over any row to understand what the correlation coefficient means and its clinical implications.</p>
+      <p class="explain-default">Tap any row to understand what the correlation coefficient means and its clinical implications.</p>
 
       <div class="explain-content" id="e-c-age">
         <h5>Age — rs = +0.27, p = 0.015</h5>
-        <p>A weak but statistically significant positive correlation: as age increases, so does hs-Troponin I. This is consistent with cumulative myocardial injury over time in ESRD — decades of uraemic toxin exposure, repetitive haemodynamic stress from dialysis, and progressive myocardial fibrosis. The effect persisted independently in the multivariable GLM (p = 0.003), confirming age as the primary driver of troponin elevation in this cohort.</p>
+        <p>A weak but statistically significant positive correlation: as age increases, so does hs-Troponin I. Consistent with cumulative myocardial injury in ESRD — decades of uraemic toxin exposure, repetitive haemodynamic stress, and progressive myocardial fibrosis. The effect persisted independently in the multivariable GLM (p = 0.003), confirming age as the primary driver.</p>
         <span class="p-val p-sig">p = 0.015 — Significant ✓ | Confirmed in GLM</span>
       </div>
-
       <div class="explain-content" id="e-c-ktv">
         <h5>Kt/V — rs = −0.34, p = 0.001</h5>
-        <p>The strongest correlation in the dataset: patients with lower dialysis adequacy (lower Kt/V) have higher troponin. rs = −0.34 represents a moderate-strength inverse relationship. Mechanistically, inadequate dialysis leads to uraemic toxin accumulation, which directly damages cardiomyocytes and impairs myocardial function. A 0.1-unit decrease in Kt/V corresponds to approximately 6.5% rise in troponin (e^0.0635 = 1.065). This relationship was attenuated but borderline in the GLM (p = 0.051) after adjusting for age and diabetes.</p>
+        <p>The strongest correlation: patients with lower dialysis adequacy have higher troponin. rs = −0.34 represents a moderate-strength inverse relationship. Inadequate dialysis leads to uraemic toxin accumulation, directly damaging cardiomyocytes. A 0.1-unit decrease in Kt/V ≈ 6.5% rise in troponin (e^0.0635 = 1.065). Attenuated to borderline in the GLM (p = 0.051) after adjusting for age and diabetes.</p>
         <span class="p-val p-sig">p = 0.001 — Strongest correlation ✓</span>
       </div>
-
       <div class="explain-content" id="e-c-dur">
         <h5>Dialysis Duration — rs = +0.12, p = 0.279</h5>
-        <p>Despite the biological rationale (longer ESRD → more cumulative damage → higher troponin), dialysis duration shows no significant correlation with troponin. This may reflect that the rate of myocardial injury matters more than the total duration, or that patients with the most severe disease die earlier, creating a survivor bias that flattens the apparent relationship over time.</p>
+        <p>Despite the biological rationale (longer ESRD → more cumulative damage → higher troponin), dialysis duration shows no significant correlation. The rate of myocardial injury may matter more than total duration, or survivor bias flattens the relationship over time.</p>
         <span class="p-val p-ns">p = 0.279 — Not significant</span>
       </div>
-
       <div class="explain-content" id="e-c-crp">
         <h5>CRP — rs = +0.06, p = 0.593</h5>
-        <p>CRP, a marker of systemic inflammation, showed essentially zero correlation with troponin (rs = 0.06 is negligible). This null finding is clinically important: it argues against systemic inflammation being the primary mechanism of chronic troponin elevation in ESRD, pointing instead to structural, haemodynamic, and uraemic mechanisms as the dominant drivers.</p>
+        <p>CRP, a marker of systemic inflammation, showed essentially zero correlation (rs = 0.06 is negligible). This argues against systemic inflammation being the primary mechanism — structural, haemodynamic, and uraemic mechanisms dominate instead.</p>
         <span class="p-val p-ns">p = 0.593 — Not significant</span>
       </div>
-
       <div class="explain-content" id="e-c-qrs">
         <h5>QRS Duration — rs = −0.22, p = 0.049</h5>
-        <p>A weak inverse correlation that barely crossed the significance threshold. Paradoxically, higher troponin is associated with slightly shorter QRS duration. This likely reflects competing effects: LBBB (causing QRS widening) clustering in some high-troponin patients, while the overall group has more fibrotic, smaller ventricles with faster conduction. This borderline finding should be interpreted cautiously — it was not significant in Table 2 as a dichotomous variable and approaches the threshold only as a continuous correlation.</p>
+        <p>A weak inverse correlation that barely crossed the significance threshold. Paradoxically, higher troponin is associated with slightly shorter QRS duration. Likely reflects competing effects from LBBB and paced rhythm in some high-troponin patients. Interpret cautiously — borderline as continuous and non-significant as dichotomous (Table 2).</p>
         <span class="p-val p-border">p = 0.049 — Borderline (interpret with caution)</span>
       </div>
-
       <div class="explain-content" id="e-c-qtc">
         <h5>QTc Interval — rs = +0.06, p = 0.593</h5>
-        <p>No meaningful correlation between QTc and troponin level (rs = 0.06 is negligible). This is notable given theoretical mechanisms by which myocardial fibrosis could prolong repolarisation. The null finding suggests that in ESRD, QTc prolongation is driven predominantly by electrolyte disturbances (hyperkalaemia, hypocalcaemia) rather than by the degree of troponin-associated myocardial injury.</p>
+        <p>No meaningful correlation between QTc and troponin (rs = 0.06 is negligible). In ESRD, QTc prolongation is driven predominantly by electrolyte disturbances (hyperkalaemia, hypocalcaemia) rather than by the degree of troponin-associated myocardial injury.</p>
         <span class="p-val p-ns">p = 0.593 — Not significant</span>
       </div>
     </div>
@@ -1020,30 +998,30 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="hoverable" onmouseenter="showExplain('e-g-age')" onmouseleave="hideExplain()">
+            <tr class="hoverable" onmouseenter="showExplain('e-g-age')" ontouchstart="showExplain('e-g-age')" onmouseleave="hideExplain()">
               <td>Age (years)</td>
-              <td style="color:var(--orange);font-weight:700">+0.016</td>
+              <td style="color:var(--orange-dark);font-weight:700">+0.016</td>
               <td>0.005</td>
               <td>+0.005 to +0.027</td>
               <td><span class="sig-badge">0.003 ✓</span></td>
             </tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-g-ktv')" onmouseleave="hideExplain()">
+            <tr class="hoverable" onmouseenter="showExplain('e-g-ktv')" ontouchstart="showExplain('e-g-ktv')" onmouseleave="hideExplain()">
               <td>Kt/V (dialysis adequacy)</td>
-              <td style="color:#FFB800;font-weight:700">−0.635</td>
+              <td style="color:#886600;font-weight:700">−0.635</td>
               <td>0.325</td>
               <td>−1.273 to −0.002</td>
               <td><span class="border-badge">0.051 ~</span></td>
             </tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-g-dm')" onmouseleave="hideExplain()">
+            <tr class="hoverable" onmouseenter="showExplain('e-g-dm')" ontouchstart="showExplain('e-g-dm')" onmouseleave="hideExplain()">
               <td>Diabetes mellitus (yes vs no)</td>
-              <td style="color:#FFB800;font-weight:700">+0.301</td>
+              <td style="color:#886600;font-weight:700">+0.301</td>
               <td>0.155</td>
               <td>−0.003 to +0.604</td>
               <td><span class="border-badge">0.052 ~</span></td>
             </tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-g-qwave')" onmouseleave="hideExplain()">
+            <tr class="hoverable" onmouseenter="showExplain('e-g-qwave')" ontouchstart="showExplain('e-g-qwave')" onmouseleave="hideExplain()">
               <td>Pathological Q waves (yes vs no)</td>
-              <td style="color:#666">−0.385</td>
+              <td style="color:#999">−0.385</td>
               <td>0.265</td>
               <td>−0.904 to +0.134</td>
               <td><span class="ns-badge">0.146</span></td>
@@ -1063,29 +1041,26 @@
 
     <div class="explain-panel">
       <h4>Data Point Explanation</h4>
-      <p class="explain-default">Hover over any predictor row to understand what the effect estimate means in clinical terms and how to interpret confidence intervals in the context of this model.</p>
+      <p class="explain-default">Tap any predictor row to understand what the effect estimate means in clinical terms and how to interpret confidence intervals in the context of this model.</p>
 
       <div class="explain-content" id="e-g-age">
         <h5>Age — B = +0.016, p = 0.003</h5>
-        <p>Age is the only variable reaching independent statistical significance. A B of +0.016 means that for each additional year of age, log(troponin) increases by 0.016 units — translating to approximately a <strong>1.6% increase in troponin per year</strong> of age (e^0.016 ≈ 1.016). The 95% CI fully excludes zero (+0.005 to +0.027), confirming this is a robust independent effect. This finding supports the concept that cumulative myocardial injury from ESRD drives troponin elevation progressively with age, independent of other clinical factors.</p>
+        <p>Age is the only variable reaching independent statistical significance. B = +0.016 means for each additional year of age, log(troponin) increases by 0.016 units — approximately a <strong>1.6% increase in troponin per year</strong> of age (e^0.016 ≈ 1.016). The 95% CI fully excludes zero (+0.005 to +0.027), confirming a robust independent effect. Cumulative myocardial injury from ESRD drives troponin elevation progressively with age, independent of other clinical factors.</p>
         <span class="p-val p-sig">p = 0.003 — Sole significant independent predictor ✓</span>
       </div>
-
       <div class="explain-content" id="e-g-ktv">
         <h5>Kt/V — B = −0.635, p = 0.051</h5>
-        <p>Kt/V narrowly missed significance after adjusting for age and diabetes (p = 0.051). The 95% CI just touches zero (−1.273 to −0.002), indicating the model estimates a negative effect but with marginal precision. A one-unit increase in Kt/V would correspond to a 47% decrease in troponin (e^−0.635), but a more realistic 0.1-unit increase corresponds to ~6.3% decrease. The attenuation from the univariate level (p = 0.001 in Table 3) to p = 0.051 in the adjusted model is likely due to age confounding — older patients may have lower Kt/V through non-adherence or access issues. With a larger sample, Kt/V would likely achieve independent significance.</p>
+        <p>Kt/V narrowly missed significance after adjusting for age and diabetes (p = 0.051). The 95% CI just touches zero (−1.273 to −0.002). A one-unit increase in Kt/V would correspond to a 47% decrease in troponin (e^−0.635), but a more realistic 0.1-unit increase corresponds to ~6.3% decrease. Attenuation from univariate (p = 0.001) to adjusted (p = 0.051) is likely due to age confounding. With a larger sample, Kt/V would likely achieve independent significance.</p>
         <span class="p-val p-border">p = 0.051 — Borderline; clinically important</span>
       </div>
-
       <div class="explain-content" id="e-g-dm">
         <h5>Diabetes Mellitus — B = +0.301, p = 0.052</h5>
-        <p>Diabetes mellitus showed a borderline independent association with higher troponin (B = +0.301, p = 0.052). The CI just touches zero (−0.003 to +0.604). A B of +0.301 translates to a <strong>35% higher troponin in diabetic vs non-diabetic patients</strong> (e^0.301 ≈ 1.35), adjusting for age, Kt/V, and Q waves. Diabetes in ESRD causes additional microvascular myocardial damage, autonomic neuropathy affecting cardiac function, and accelerated atherosclerosis — all contributing to troponin elevation. The borderline p-value likely reflects insufficient power (n=82, only 41 diabetics).</p>
+        <p>Diabetes mellitus showed a borderline independent association with higher troponin (B = +0.301, p = 0.052). The CI just touches zero (−0.003 to +0.604). B = +0.301 translates to a <strong>35% higher troponin in diabetic vs non-diabetic patients</strong> (e^0.301 ≈ 1.35), adjusting for age, Kt/V, and Q waves. Diabetes in ESRD causes additional microvascular myocardial damage, autonomic neuropathy, and accelerated atherosclerosis. Borderline p-value likely reflects insufficient power (n=82, only 41 diabetics).</p>
         <span class="p-val p-border">p = 0.052 — Borderline; likely significant with larger N</span>
       </div>
-
       <div class="explain-content" id="e-g-qwave">
         <h5>Pathological Q Waves — B = −0.385, p = 0.146</h5>
-        <p>Q waves (markers of prior transmural MI) showed no independent association with troponin (p = 0.146). Counterintuitively, the effect estimate is <em>negative</em> (B = −0.385), suggesting patients with Q waves may trend toward slightly lower troponin in the adjusted model — though this is not significant. This is likely a spurious finding from the small number of Q wave cases (n=7). Sensitivity analyses replacing Q waves with LV strain, ST depression, or T-wave inversion all confirmed no significant independent ECG effects, validating the conclusion that surface ECG morphology does not independently predict troponin magnitude in ESRD.</p>
+        <p>Q waves showed no independent association with troponin (p = 0.146). The effect estimate is counterintuitively negative (B = −0.385) — likely a spurious finding from the small number of Q wave cases (n=7). Sensitivity analyses replacing Q waves with LV strain, ST depression, or T-wave inversion all confirmed no significant independent ECG effects — surface ECG morphology does not independently predict troponin magnitude in ESRD.</p>
         <span class="p-val p-ns">p = 0.146 — Not significant; ECG not an independent predictor</span>
       </div>
     </div>
