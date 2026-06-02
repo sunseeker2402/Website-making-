@@ -1,607 +1,225 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ESRD & hs-Troponin I Study</title>
-  <style>
-    :root {
-      --accent:      #546170;
-      --accent-lt:   #8A9BAA;
-      --accent-dk:   #2D3A47;
-      --accent-glow: rgba(84, 97, 112, 0.10);
-      --bg:          #F4F1EC;
-      --surface:     #FEFCF9;
-      --surface2:    #EAE7E1;
-      --border:      #D6D2CB;
-      --border-dk:   #AEAAA2;
-      --text:        #1C1917;
-      --muted:       #706C66;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>متجري — معاينة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fbf7f1; --ink:#2a2420; --muted:#8a7d70;
+    --accent:#b6452f; --accent-deep:#8f3322; --olive:#5e6e4a;
+    --card:#ffffff; --line:#ece2d6; --gold:#c9a24a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;}
+  h1,h2,h3,.display{font-family:'Cairo',sans-serif;}
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+  .topbar{background:var(--accent);color:#fff;text-align:center;font-size:.85rem;padding:8px 16px;}
+  header{background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50;}
+  .nav{max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:24px;}
+  .logo{font-family:'Cairo';font-weight:900;font-size:1.6rem;color:var(--accent);}
+  .logo span{color:var(--olive);}
+  .menu{display:flex;gap:22px;font-weight:500;font-size:.92rem;}
+  .menu a{color:var(--ink);text-decoration:none;transition:color .2s;}
+  .menu a:hover{color:var(--accent);}
+  .icons{display:flex;gap:18px;font-size:1.3rem;}
+  @media(max-width:820px){.menu{display:none;}}
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      min-height: 100vh;
-      line-height: 1.6;
-    }
+  .hero{max-width:1200px;margin:28px auto;padding:0 24px;}
+  .hero-inner{background:linear-gradient(120deg,var(--accent),var(--accent-deep));border-radius:22px;color:#fff;padding:48px;position:relative;overflow:hidden;}
+  .hero-inner::after{content:"";position:absolute;left:-60px;bottom:-60px;width:240px;height:240px;background:radial-gradient(circle,rgba(201,162,74,.55),transparent 70%);}
+  .hero h1{font-size:2.4rem;font-weight:900;margin-bottom:12px;line-height:1.25;}
+  .hero p{font-size:1.05rem;max-width:520px;opacity:.95;margin-bottom:22px;}
+  .btn{background:#fff;color:var(--accent);border:none;border-radius:999px;padding:13px 32px;font-family:'Cairo';font-weight:700;cursor:pointer;}
+  @media(max-width:560px){.hero h1{font-size:1.8rem;}.hero-inner{padding:34px 24px;}}
 
-    .page { display: none; min-height: 100vh; }
-    .page.active { display: block; }
+  .note{max-width:1200px;margin:0 auto;padding:14px 24px;background:#fff6e9;border:1px dashed var(--gold);border-radius:12px;color:#8a6d2f;font-size:.85rem;text-align:center;}
 
-    nav {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(254,252,249,0.96);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 2rem;
-      display: flex; align-items: center; justify-content: space-between;
-      height: 62px;
-    }
-    .nav-logo {
-      font-size: 1rem; font-weight: 700; letter-spacing: 0.06em;
-      color: var(--accent-dk); text-transform: uppercase;
-    }
-    .nav-logo span { color: var(--muted); font-weight: 400; }
+  /* category block — each stands alone, banded */
+  .cat{padding:44px 0;}
+  .cat:nth-child(even){background:#f5ede2;}
+  .cat-inner{max-width:1200px;margin:0 auto;padding:0 24px;}
+  .cat-tag{display:inline-block;font-family:'Cairo';font-weight:700;font-size:.75rem;color:#fff;background:var(--olive);padding:4px 14px;border-radius:999px;margin-bottom:10px;}
+  .cat-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:24px;}
+  .cat-head h2{font-size:1.7rem;font-weight:900;}
+  .cat-head h2 small{display:block;font-family:'Tajawal';font-weight:400;font-size:.85rem;color:var(--muted);margin-top:2px;}
+  .cat-head .total{font-size:.85rem;color:var(--muted);}
+  .cat-head .total b{color:var(--accent);font-family:'Cairo';}
 
-    .back-btn {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      background: transparent; border: 1.5px solid var(--border-dk);
-      color: var(--muted); padding: 0.4rem 1rem; border-radius: 6px;
-      cursor: pointer; font-size: 0.85rem; transition: all 0.18s;
-      -webkit-appearance: none;
-    }
-    .back-btn:hover,
-    .back-btn:active { border-color: var(--accent-dk); background: var(--accent-dk); color: #fff; }
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
+  @media(max-width:980px){.grid{grid-template-columns:repeat(3,1fr);}}
+  @media(max-width:680px){.grid{grid-template-columns:repeat(2,1fr);}}
 
-    .hero {
-      padding: 4.5rem 2rem 2rem;
-      max-width: 760px; margin: 0 auto; text-align: center;
-    }
-    .hero-tag {
-      display: inline-block;
-      background: var(--surface2); border: 1px solid var(--border-dk);
-      color: var(--muted); padding: 0.28rem 0.9rem; border-radius: 99px;
-      font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
-      margin-bottom: 1.2rem;
-    }
-    .hero h1 {
-      font-size: clamp(1.6rem, 3.5vw, 2.5rem);
-      font-weight: 800; line-height: 1.25;
-      margin-bottom: 0.85rem; color: var(--text);
-    }
-    .hero h1 span { color: var(--accent-dk); }
-    .hero-sub {
-      color: var(--muted); font-size: 0.95rem; max-width: 560px;
-      margin: 0 auto 0;
-      line-height: 1.7;
-    }
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:transform .18s,box-shadow .18s;}
+  .card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(42,36,32,.10);}
+  .ph{aspect-ratio:1/1;background:repeating-linear-gradient(45deg,#f4ece1,#f4ece1 12px,#efe5d7 12px,#efe5d7 24px);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);position:relative;}
+  .ph .cam{font-size:1.9rem;opacity:.5;margin-bottom:4px;}
+  .ph small{font-size:.7rem;}
+  .badge{position:absolute;top:10px;right:10px;background:var(--gold);color:#fff;font-family:'Cairo';font-weight:700;font-size:.68rem;padding:3px 10px;border-radius:999px;}
 
-    /* ─── STAT STRIP ─────────────────────────────────── */
-    .stat-strip {
-      max-width: 760px; margin: 2rem auto 2.5rem; padding: 0 2rem;
-    }
-    .stat-strip-inner {
-      background: var(--surface); border: 1.5px solid var(--border);
-      border-radius: 14px; padding: 0;
-      display: flex; flex-wrap: wrap; overflow: hidden;
-    }
-    .stat-item {
-      flex: 1; min-width: 130px;
-      padding: 1.1rem 1.2rem; text-align: center;
-      border-right: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-    .stat-item:nth-child(5) { border-right: none; }
-    @media (max-width: 640px) {
-      .stat-item:nth-child(odd):last-child { border-right: none; }
-      .stat-item { flex-basis: 50%; }
-      .stat-item:nth-child(5) { flex-basis: 100%; border-right: none; }
-    }
-    .stat-val { font-size: 1.55rem; font-weight: 800; color: var(--accent-dk); line-height: 1; }
-    .stat-label { font-size: 0.73rem; color: var(--muted); margin-top: 0.3rem; line-height: 1.3; }
+  .card-body{padding:14px;display:flex;flex-direction:column;gap:9px;flex:1;}
+  .card-body h3{font-size:.98rem;font-weight:700;line-height:1.4;}
+  .meta{display:flex;align-items:center;justify-content:space-between;}
+  .price{font-family:'Cairo';font-weight:900;color:var(--accent);font-size:1.12rem;}
+  .price s{color:var(--muted);font-weight:400;font-size:.8rem;margin-inline-start:5px;}
+  .sold{font-size:.78rem;color:var(--olive);font-weight:500;background:#eef1e8;padding:3px 9px;border-radius:8px;white-space:nowrap;}
 
-    .conclusion-box { max-width: 760px; margin: 0 auto 3rem; padding: 0 2rem; }
-    .conclusion-card {
-      background: var(--surface);
-      border: 1.5px solid var(--border); border-radius: 14px;
-      padding: 2rem 2.5rem;
-    }
-    .conclusion-card h2 {
-      font-size: 0.72rem; font-weight: 700; color: var(--muted);
-      margin-bottom: 1.2rem; text-transform: uppercase; letter-spacing: 0.12em;
-      padding-bottom: 0.8rem; border-bottom: 1px solid var(--border);
-    }
-    .conclusion-points { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
-    .conclusion-points li {
-      display: flex; align-items: flex-start; gap: 0.7rem;
-      font-size: 0.92rem; color: var(--text); line-height: 1.65;
-      padding-bottom: 0.7rem; border-bottom: 1px solid var(--surface2);
-    }
-    .conclusion-points li:last-child { border-bottom: none; padding-bottom: 0; }
-    .conclusion-points li::before {
-      content: '';
-      width: 3px; min-width: 3px; height: 1.2em; margin-top: 0.22em;
-      background: var(--accent); border-radius: 2px; flex-shrink: 0;
-    }
-    .conclusion-points li span { display: block; }
+  /* quantity stepper — amount wanted before adding */
+  .qty-row{display:flex;align-items:center;gap:8px;margin-top:2px;}
+  .qty-label{font-size:.78rem;color:var(--muted);}
+  .stepper{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-inline-start:auto;}
+  .stepper button{width:30px;height:30px;border:none;background:#f4ece1;color:var(--ink);font-size:1.1rem;font-weight:700;cursor:pointer;line-height:1;}
+  .stepper button:hover{background:var(--gold);color:#fff;}
+  .stepper .q{width:34px;text-align:center;font-family:'Cairo';font-weight:700;font-size:.95rem;}
 
-    /* ─── SECTION GRID ───────────────────────────────── */
-    .sections-title {
-      max-width: 760px; margin: 0 auto 1rem; padding: 0 2rem;
-      font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em;
-      color: var(--muted);
-    }
-    .section-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr);
-      gap: 0.85rem; max-width: 760px; margin: 0 auto 5rem; padding: 0 2rem;
-    }
-    @media (max-width: 560px) { .section-grid { grid-template-columns: 1fr; } }
-    .section-card {
-      background: var(--surface); border: 1.5px solid var(--border);
-      border-left: 4px solid var(--border); border-radius: 10px;
-      padding: 1.5rem 1.5rem 1.3rem;
-      cursor: pointer; transition: all 0.18s;
-      position: relative; overflow: hidden;
-    }
-    .section-card:hover,
-    .section-card:active {
-      border-color: var(--border-dk); border-left-color: var(--accent-dk);
-      box-shadow: 0 4px 18px rgba(45,58,71,0.10);
-      transform: translateY(-2px);
-    }
-    .section-num {
-      font-size: 0.68rem; color: var(--accent-lt); letter-spacing: 0.1em;
-      text-transform: uppercase; margin-bottom: 0.5rem; font-weight: 600;
-    }
-    .section-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.4rem; color: var(--text); line-height: 1.3; }
-    .section-card p { font-size: 0.8rem; color: var(--muted); line-height: 1.55; }
-    .section-card-footer {
-      margin-top: 1rem; font-size: 0.78rem; color: var(--accent);
-      font-weight: 600; display: flex; align-items: center; gap: 0.35rem;
-    }
+  .add{margin-top:4px;background:var(--olive);color:#fff;border:none;border-radius:10px;padding:9px;font-family:'Cairo';font-weight:700;cursor:pointer;transition:background .2s;}
+  .add:hover{background:#4d5b3c;}
 
-    .section-page-header {
-      padding: 2rem 2rem 1rem;
-      max-width: 1200px; margin: 0 auto;
-      display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
-    }
-    .section-page-header h2 { font-size: clamp(1.2rem, 2.5vw, 1.8rem); font-weight: 800; color: var(--text); }
-    .section-page-header h2 span { color: var(--accent); }
-
-    .section-layout {
-      max-width: 1200px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 320px; gap: 1.5rem;
-      padding: 0 2rem 4rem; align-items: start;
-    }
-    @media (max-width: 900px) { .section-layout { grid-template-columns: 1fr; } }
-
-    .sub-section { margin-bottom: 1.5rem; }
-    .sub-section-header {
-      background: var(--accent-dk); color: #fff;
-      padding: 0.6rem 1.1rem; border-radius: 10px 10px 0 0;
-      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-      display: flex; align-items: center; gap: 0.5rem;
-    }
-    .sub-section-header .sh-accent { color: var(--accent-lt); }
-    .sub-section .table-wrapper { border-radius: 0 0 10px 10px; border-top: none; }
-
-    .table-wrapper {
-      overflow-x: auto;
-      background: var(--surface); border: 1.5px solid var(--border);
-      border-radius: 12px;
-    }
-    table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
-    thead th {
-      background: var(--surface2); color: var(--accent-dk);
-      padding: 0.85rem 1rem; text-align: left;
-      font-weight: 700; font-size: 0.78rem; letter-spacing: 0.04em;
-      border-bottom: 1.5px solid var(--border); white-space: nowrap;
-    }
-    tbody td { padding: 0.7rem 1rem; border-bottom: 1px solid var(--surface2); vertical-align: top; color: var(--text); }
-    tbody tr:last-child td { border-bottom: none; }
-    tbody tr.hoverable { cursor: pointer; transition: background 0.15s; }
-    tbody tr.hoverable:hover,
-    tbody tr.hoverable:active { background: var(--surface2); }
-    tbody tr.hoverable:hover td,
-    tbody tr.hoverable:active td { color: var(--accent-dk); }
-
-    /* group row inside regular table */
-    .grp td {
-      background: var(--surface2); color: var(--accent-dk);
-      padding: 0.45rem 1rem; font-size: 0.72rem; font-weight: 700;
-      letter-spacing: 0.08em; text-transform: uppercase;
-    }
-
-    .sig-badge {
-      display: inline-block; background: #EDF2F7;
-      border: 1px solid #4A6380; color: #2D3A47;
-      padding: 0.15rem 0.55rem; border-radius: 99px;
-      font-size: 0.72rem; font-weight: 700; white-space: nowrap;
-    }
-    .ns-badge {
-      display: inline-block; background: var(--surface2);
-      border: 1px solid var(--border); color: #9CA3AF;
-      padding: 0.15rem 0.55rem; border-radius: 99px;
-      font-size: 0.72rem; white-space: nowrap;
-    }
-    .border-badge {
-      display: inline-block; background: #FAFAE8;
-      border: 1px solid #A89040; color: #6B5C1E;
-      padding: 0.15rem 0.55rem; border-radius: 99px;
-      font-size: 0.72rem; white-space: nowrap;
-    }
-
-    .explain-panel {
-      position: sticky; top: 80px;
-      background: var(--surface); border: 1.5px solid var(--border);
-      border-radius: 14px; padding: 1.4rem;
-    }
-    .explain-panel h4 {
-      font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em;
-      color: var(--accent); margin-bottom: 0.75rem;
-    }
-    .explain-default { color: var(--muted); font-size: 0.85rem; line-height: 1.6; }
-    .explain-content { display: none; }
-    .explain-content.active { display: block; }
-    .explain-content h5 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--accent-dk); }
-    .explain-content p { font-size: 0.84rem; color: #4A4540; line-height: 1.7; }
-    .explain-content .p-val {
-      margin-top: 0.6rem; font-size: 0.78rem;
-      padding: 0.35rem 0.75rem; border-radius: 6px;
-      display: inline-block; font-weight: 700;
-    }
-    .explain-content .p-sig { background: #EDF2F7; border: 1px solid #4A6380; color: #2D3A47; }
-    .explain-content .p-ns  { background: var(--surface2); border: 1px solid var(--border); color: #9CA3AF; }
-    .explain-content .p-border { background: #FAFAE8; border: 1px solid #A89040; color: #6B5C1E; }
-
-    .intro-card {
-      background: var(--surface2); border: 1px solid var(--border);
-      border-radius: 10px; padding: 1.2rem; margin-bottom: 1rem;
-      font-size: 0.85rem; color: #4A4540; line-height: 1.7;
-    }
-    .intro-card strong { color: var(--accent-dk); }
-
-    .footnote {
-      font-size: 0.75rem; color: var(--muted); margin-top: 0.75rem;
-      padding: 0.75rem 1rem; background: var(--surface2);
-      border: 1px solid var(--border); border-radius: 6px; line-height: 1.6;
-    }
-
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--border-dk); border-radius: 3px; }
-  </style>
+  footer{background:var(--ink);color:#e8ddd0;margin-top:0;padding:40px 24px;}
+  .foot-inner{max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;}
+  .foot-inner h4{font-family:'Cairo';color:#fff;margin-bottom:12px;font-size:1.05rem;}
+  .foot-inner p,.foot-inner a{font-size:.9rem;color:#bfb2a3;text-decoration:none;display:block;margin-bottom:6px;}
+  .copyright{text-align:center;color:#8a7d70;font-size:.8rem;margin-top:30px;border-top:1px solid #3a332d;padding-top:18px;}
+</style>
 </head>
 <body>
 
-<!-- ══ PAGE 0 — MAIN ══ -->
-<div id="page-main" class="page active">
-  <nav>
-    <div class="nav-logo">ESRD <span>Troponin Study</span></div>
-  </nav>
+<div class="topbar">شحن داخلي سريع • الدفع عند الاستلام • بضاعة متوفرة في المخزن وجاهزة للتسليم</div>
 
-  <div class="hero">
-    <div class="hero-tag">Clinical Research · Haemodialysis · Biomarkers</div>
-    <h1>hs-Troponin I Elevation in<br/><span>End-Stage Renal Disease</span></h1>
-    <p class="hero-sub">A cross-sectional analysis of 83 haemodialysis patients examining the clinical, demographic, and electrocardiographic correlates of chronically elevated high-sensitivity cardiac troponin I (hs-Troponin I).</p>
+<header>
+  <div class="nav">
+    <div class="logo">متجري<span>.</span></div>
+    <nav class="menu">
+      <a href="#electronics">الإلكترونيات</a>
+      <a href="#clothes">الملابس والمحجبات</a>
+      <a href="#cosmetics">التجميل</a>
+      <a href="#accessories">الإكسسوارات</a>
+      <a href="#home">المنزل والأطفال</a>
+    </nav>
+    <div class="icons"><span>🔍</span><span>🛒</span><span>👤</span></div>
   </div>
+</header>
 
-  <div class="stat-strip">
-    <div class="stat-strip-inner">
-      <div class="stat-item"><div class="stat-val">83</div><div class="stat-label">Patients enrolled</div></div>
-      <div class="stat-item"><div class="stat-val">98.8%</div><div class="stat-label">Above normal troponin range</div></div>
-      <div class="stat-item"><div class="stat-val">61.8 ng/L</div><div class="stat-label">Median hs-Troponin I</div></div>
-      <div class="stat-item"><div class="stat-val">14 ng/L</div><div class="stat-label">Normal upper limit (99th percentile)</div></div>
-      <div class="stat-item"><div class="stat-val">4×</div><div class="stat-label">Median exceeds normal limit</div></div>
-    </div>
+<section class="hero">
+  <div class="hero-inner">
+    <h1>كل ما تحتاجه<br>بسعر منافس وتسليم محلي</h1>
+    <p>منتجات مختارة ومتوفرة في مخزننا — لا انتظار لشهر من الخارج. حدّد الكمية المطلوبة وأضفها للسلة.</p>
+    <button class="btn">تسوّق الآن</button>
   </div>
+</section>
 
-  <div class="conclusion-box">
-    <div class="conclusion-card">
-      <h2>Overall Conclusion</h2>
-      <ul class="conclusion-points">
-        <li><span>Nearly all ESRD haemodialysis patients (98.8%) had chronically elevated hs-Troponin I far exceeding the normal upper limit of 14 ng/L, confirming that the standard cardiac threshold used in the general population is not applicable in dialysis patients.</span></li>
-        <li><span><strong>Older age</strong> was the sole independent predictor reaching statistical significance (B = +0.016, p = 0.003), suggesting that myocardial stress accumulates over time in ESRD even after adjusting for other risk factors.</span></li>
-        <li><span><strong>Dialysis adequacy (Kt/V)</strong> showed a consistent inverse relationship with troponin — lower Kt/V = higher troponin — significant in univariate analysis (rs = −0.34, p = 0.001) and borderline in the multivariable model (p = 0.051), indicating inadequate dialysis may contribute to myocardial stress.</span></li>
-        <li><span>Elevated ultrafiltration volume and a history of cerebrovascular accident were significantly more common in the high-troponin group, highlighting the systemic cardiovascular burden in these patients.</span></li>
-        <li><span>ECG changes (ST depression, T-wave inversion, LVH, QTc prolongation) were widespread across all patients but did <em>not</em> differ significantly between high- and low-troponin groups, underscoring that troponin elevation is independent of surface ECG morphology in ESRD.</span></li>
-        <li><span><strong>QRS duration</strong> was the only ECG parameter significantly different between groups (p = 0.046), though this likely reflects ventricular conduction variability rather than a direct troponin-driven process.</span></li>
-      </ul>
-    </div>
-  </div>
+<div class="note">معاينة تصميم — كل قسم منفصل، وكل منتج يعرض «الكمية المطلوبة» و«عدد المبيعات» قبل الضغط عليه. استبدل المربعات بصور منتجاتك.</div>
 
-  <p class="sections-title">Explore Data Sections</p>
-  <div class="section-grid">
-    <div class="section-card" onclick="showPage('page-t1')">
-      <div class="section-num">Table 01</div>
-      <h3>Demographics &amp; Clinical Characteristics</h3>
-      <p>Baseline demographics, dialysis parameters, comorbidities, and lab values by troponin group.</p>
-      <div class="section-card-footer">View data →</div>
-    </div>
-    <div class="section-card" onclick="showPage('page-t2')">
-      <div class="section-num">Table 02</div>
-      <h3>ECG Findings &amp; Intervals</h3>
-      <p>Rhythm, conduction intervals (QTc, QRS, PQ), and binary ECG abnormalities by troponin group.</p>
-      <div class="section-card-footer">View data →</div>
-    </div>
-    <div class="section-card" onclick="showPage('page-t3')">
-      <div class="section-num">Table 03</div>
-      <h3>Spearman Correlations</h3>
-      <p>Ranked correlations of age, Kt/V, CRP, QRS, and QTc with continuous hs-Troponin I.</p>
-      <div class="section-card-footer">View data →</div>
-    </div>
-    <div class="section-card" onclick="showPage('page-t4')">
-      <div class="section-num">Table 04</div>
-      <h3>Multivariable GLM</h3>
-      <p>Independent predictors of log-transformed hs-Troponin I from the adjusted linear model.</p>
-      <div class="section-card-footer">View data →</div>
+<!-- ELECTRONICS -->
+<section class="cat" id="electronics">
+  <div class="cat-inner">
+    <span class="cat-tag">قسم مستقل</span>
+    <div class="cat-head"><h2>الإلكترونيات<small>إكسسوارات الهواتف والأجهزة الصغيرة</small></h2><div class="total">إجمالي مبيعات القسم: <b>4,120</b> قطعة</div></div>
+    <div class="grid">
+      <div class="card"><div class="ph"><span class="badge">الأكثر مبيعًا</span><div class="cam">📷</div><small>ضع صورة المنتج</small></div><div class="card-body"><h3>جراب هاتف سيليكون</h3><div class="meta"><div class="price">25 ₪ <s>40 ₪</s></div><span class="sold">تم بيع 1,540</span></div><div class="qty-row"><span class="qty-label">الكمية</span><div class="stepper"><button onclick="dec(this)">−</button><span class="q">1</span><button onclick="inc(this)">+</button></div></div><button class="add" onclick="addCart(this)">أضف 1 إلى السلة</button></div></div>
+      <div class="card"><div class="ph"><div class="cam">📷</div><small>ضع صورة المنتج</small></div><div class="card-body"><h3>كيبل شحن سريع Type-C</h3><div class="meta"><div class="price">15 ₪</div><span class="sold">تم بيع 980</span></div><div class="qty-row"><span class="qty-label">الكمية</span><div class="stepper"><button onclick="dec(this)">−</button><span class="q">1</span><button onclick="inc(this)">+</button></div></div><button class="add" onclick="addCart(this)">أضف 1 إلى السلة</button></div></div>
+      <div class="card"><div class="ph"><div class="cam">📷</div><small>ضع صورة المنتج</small></div><div class="card-body"><h3>شاحن متنقل 10000mAh</h3><div class="meta"><div class="price">75 ₪</div><span class="sold">تم بيع 610</span></div><div class="qty-row"><span class="qty-label">الكمية</span><div class="stepper"><button onclick="dec(this)">−</button><span class="q">1</span><button onclick="inc(this)">+</button></div></div><button class="add" onclick="addCart(this)">أضف 1 إلى السلة</button></div></div>
+      <div class="card"><div class="ph"><span class="badge">عرض</span><div class="cam">📷</div><small>ضع صورة المنتج</small></div><div class="card-body"><h3>سماعات لاسلكية</h3><div class="meta"><div class="price">90 ₪ <s>130 ₪</s></div><span class="sold">تم بيع 990</span></div><div class="qty-row"><span class="qty-label">الكمية</span><div class="stepper"><button onclick="dec(this)">−</button><span class="q">1</span><button onclick="inc(this)">+</button></div></div><button class="add" onclick="addCart(this)">أضف 1 إلى السلة</button></div></div>
     </div>
   </div>
+</section>
 
-  <div style="max-width:760px;margin:0 auto 3rem;padding:0 2rem;text-align:center;">
-    <p style="font-size:0.72rem;color:var(--muted);margin-bottom:0.5rem;letter-spacing:0.05em;">Bookmark or share this page</p>
-    <a href="https://htmlpreview.github.io/?https://github.com/sunseeker2402/Website-making-/blob/claude/website-builder-setup-TRM1q/index.html"
-       style="font-size:0.75rem;color:var(--accent);word-break:break-all;text-decoration:none;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:0.6rem 1rem;display:inline-block;line-height:1.5;">
-      htmlpreview.github.io/?https://github.com/sunseeker2402/Website-making-/blob/claude/website-builder-setup-TRM1q/index.html
-    </a>
+<!-- CLOTHES -->
+<section class="cat" id="clothes">
+  <div class="cat-inner">
+    <span class="cat-tag">قسم مستقل</span>
+    <div class="cat-head"><h2>الملابس والمحجبات<small>أزياء نسائية ومحجبات</small></h2><div class="total">إجمالي مبيعات القسم: <b>3,460</b> قطعة</div></div>
+    <div class="grid">
+      <div class="card"><div class="ph"><span class="badge">الأكثر مبيعًا</span><div class="cam">📷</div><small>ضع صورة المنتج</small></div><div class="card-body"><h3>طرحة شيفون سادة</h3><div class="meta"><div class="price">18 ₪</div><span class="sold">تم بيع 1,720</span></div><div class="qty-row"><span class="qty-label">الكمية</span><div class="stepper"><button onclick="dec(this)">−</button><span class="q">1</span><button onclick="inc(this)">+</button></div></div><button class="add" onclick="addCart(this)">أضف 1 إلى السلة</button></div></div>
+      <div class="card"><div class="ph"><div class="cam">📷</div><small>ضع صورة المنتج</small></div><div class="card-body"><h3>طرحة جيرسيه قطن</h3><div class="meta"><div class="price">20 ₪</div><span class="sold">تم بيع 1,050</span></div><div class="qty-row"><span class="qty-label">الكمية</span><div class="stepper"><button onclick="dec(this)">−</button><span class="q">1</span><button onclick="inc(this)">+</button></div></div><button class="add" onclick="addCart(this)">أضف 1 إلى السلة</button></div></div>
+      <div class="card"><div class="ph"><span class="badge">عرض</span><div class="cam">📷</div><small>ضع صورة المنتج</small></div><div class="card-body"><h3>فستان طويل واسع</h3><div class="meta"><div class="price">110 ₪ <s>160 ₪</s></div><span class="sold">تم بيع 410</span></div><div class="qty-row"><span class="qty-label">الكمية</span><div class="stepper"><button onclick="dec(this)">−</button><span class="q">1</span><button onclick="inc(this)">+</button></div></div><button class="add" onclick="addCart(this)">أضف 1 إلى السلة</button></div></div>
+      <div class="card"><div class="ph"><div class="cam">📷</div><small>ضع صورة المنتج</small></div><div class="card-body"><h3>كارديغان صوف خفيف</h3><div class="meta"><div class="price">70 ₪</div><span class="sold">تم بيع 280</span></div><div class="qty-row"><span class="qty-label">الكمية</span><div class="stepper"><button onclick="dec(this)">−</button><span class="q">1</span><button onclick="inc(this)">+</button></div></div><button class="add" onclick="addCart(this)">أضف 1 إلى السلة</button></div></div>
+    </div>
   </div>
-</div>
+</section>
 
+<!-- COSMETICS -->
+<section class="cat" id="cosmetics">
+  <div class="cat-inner">
+    <span class="cat-tag">قسم مستقل</span>
+    <div class="cat-head"><h2>مستحضرات التجميل<small>عناية ومكياج</small></h2><div class="total">إجمالي مبيعات القسم: <b>2,890</b> قطعة</div></div>
+    <div class="grid">
+      <div class="card"><div class="ph"><div class="cam">📷</div><small>ضع صورة المنتج</small></div><div class="card-body"><h3>أحمر شفاه مطفّي</h3><div class="meta"><div class="price">22 ₪</div><span class="sold">تم بيع 1,210</span></div><div class="qty-row"><span class="qty-label">الكمية</span><div class="stepper"><button onclick="dec(this)">−</button><span class="q">1</span><button onclick="inc(this)">+</button></div></div><button class="add" onclick="addCart(this)">أضف 1 إلى السلة</button></div></div>
+      <div class="card"><div class="ph"><div class="cam">📷</div><small>ضع صورة المنتج</small></div><div class="card-body"><h3>كريم أساس</h3><div class="meta"><div class="price">45 ₪</div><span class="sold">تم بيع 720</span></div><div class="qty-row"><span class="qty-label">الكمية</span><div class="stepper"><button onclick="dec(this)">−</button><span class="q">1</span><button onclick="inc(this)">+</button></div></div><button class="add" onclick="addCart(this)">أضف 1 إلى السلة</button></div></div>
+      <div class="card"><div class="ph"><span class="badge">جديد</span><div class="cam">📷</div><small>ضع صورة المنتج</small></div><div class="card-body"><h3>طقم فرش مكياج (12 قطعة)</h3><div class="meta"><div class="price">55 ₪</div><span class="sold">تم بيع 540</span></div><div class="qty-row"><span class="qty-label">الكمية</span><div class="stepper"><button onclick="dec(this)">−</button><span class="q">1</span><button onclick="inc(this)">+</button></div></div><button class="add" onclick="addCart(this)">أضف 1 إلى السلة</button></div></div>
+      <div class="card"><div class="ph"><div class="cam">📷</div><small>ضع صورة المنتج</small></div><div class="card-body"><h3>سيروم بفيتامين C</h3><div class="meta"><div class="price">60 ₪</div><span class="sold">تم بيع 420</span></div><div class="qty-row"><span class="qty-label">الكمية</span><div class="stepper"><button onclick="dec(this)">−</button><span class="q">1</span><button onclick="inc(this)">+</button></div></div><button class="add" onclick="addCart(this)">أضف 1 إلى السلة</button></div></div>
+    </div>
+  </div>
+</section>
 
-<!-- ══ PAGE 1 — TABLE 1 ══ -->
-<div id="page-t1" class="page">
-  <nav>
-    <div class="nav-logo">ESRD <span>Troponin Study</span></div>
-    <button class="back-btn" onclick="showPage('page-main')">← Back to Overview</button>
-  </nav>
-  <div class="section-page-header">
+<!-- ACCESSORIES -->
+<section class="cat" id="accessories">
+  <div class="cat-inner">
+    <span class="cat-tag">قسم مستقل</span>
+    <div class="cat-head"><h2>الإكسسوارات<small>ساعات ومجوهرات ونظارات</small></h2><div class="total">إجمالي مبيعات القسم: <b>1,950</b> قطعة</div></div>
+    <div class="grid">
+      <div class="card"><div class="ph"><div class="cam">📷</div><small>ضع صورة المنتج</small></div><div class="card-body"><h3>ساعة يد نسائية</h3><div class="meta"><div class="price">85 ₪</div><span class="sold">تم بيع 560</span></div><div class="qty-row"><span class="qty-label">الكمية</span><div class="stepper"><button onclick="dec(this)">−</button><span class="q">1</span><button onclick="inc(this)">+</button></div></div><button class="add" onclick="addCart(this)">أضف 1 إلى السلة</button></div></div>
+      <div class="card"><div class="ph"><div class="cam">📷</div><small>ضع صورة المنتج</small></div><div class="card-body"><h3>نظارة شمسية</h3><div class="meta"><div class="price">35 ₪</div><span class="sold">تم بيع 690</span></div><div class="qty-row"><span class="qty-label">الكمية</span><div class="stepper"><button onclick="dec(this)">−</button><span class="q">1</span><button onclick="inc(this)">+</button></div></div><button class="add" onclick="addCart(this)">أضف 1 إلى السلة</button></div></div>
+      <div class="card"><div class="ph"><span class="badge">طقم</span><div class="cam">📷</div><small>ضع صورة المنتج</small></div><div class="card-body"><h3>طقم إكسسوارات (عقد وأقراط)</h3><div class="meta"><div class="price">40 ₪</div><span class="sold">تم بيع 470</span></div><div class="qty-row"><span class="qty-label">الكمية</span><div class="stepper"><button onclick="dec(this)">−</button><span class="q">1</span><button onclick="inc(this)">+</button></div></div><button class="add" onclick="addCart(this)">أضف 1 إلى السلة</button></div></div>
+      <div class="card"><div class="ph"><div class="cam">📷</div><small>ضع صورة المنتج</small></div><div class="card-body"><h3>حامل هاتف للسيارة</h3><div class="meta"><div class="price">30 ₪</div><span class="sold">تم بيع 230</span></div><div class="qty-row"><span class="qty-label">الكمية</span><div class="stepper"><button onclick="dec(this)">−</button><span class="q">1</span><button onclick="inc(this)">+</button></div></div><button class="add" onclick="addCart(this)">أضف 1 إلى السلة</button></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOME & KIDS -->
+<section class="cat" id="home">
+  <div class="cat-inner">
+    <span class="cat-tag">قسم مستقل</span>
+    <div class="cat-head"><h2>المنزل والأطفال<small>أدوات منزلية وألعاب</small></h2><div class="total">إجمالي مبيعات القسم: <b>1,640</b> قطعة</div></div>
+    <div class="grid">
+      <div class="card"><div class="ph"><div class="cam">📷</div><small>ضع صورة المنتج</small></div><div class="card-body"><h3>منظّم أدراج المطبخ</h3><div class="meta"><div class="price">28 ₪</div><span class="sold">تم بيع 520</span></div><div class="qty-row"><span class="qty-label">الكمية</span><div class="stepper"><button onclick="dec(this)">−</button><span class="q">1</span><button onclick="inc(this)">+</button></div></div><button class="add" onclick="addCart(this)">أضف 1 إلى السلة</button></div></div>
+      <div class="card"><div class="ph"><div class="cam">📷</div><small>ضع صورة المنتج</small></div><div class="card-body"><h3>صندوق تخزين قابل للطي</h3><div class="meta"><div class="price">32 ₪</div><span class="sold">تم بيع 380</span></div><div class="qty-row"><span class="qty-label">الكمية</span><div class="stepper"><button onclick="dec(this)">−</button><span class="q">1</span><button onclick="inc(this)">+</button></div></div><button class="add" onclick="addCart(this)">أضف 1 إلى السلة</button></div></div>
+      <div class="card"><div class="ph"><span class="badge">للأطفال</span><div class="cam">📷</div><small>ضع صورة المنتج</small></div><div class="card-body"><h3>لعبة تعليمية تركيب</h3><div class="meta"><div class="price">38 ₪</div><span class="sold">تم بيع 440</span></div><div class="qty-row"><span class="qty-label">الكمية</span><div class="stepper"><button onclick="dec(this)">−</button><span class="q">1</span><button onclick="inc(this)">+</button></div></div><button class="add" onclick="addCart(this)">أضف 1 إلى السلة</button></div></div>
+      <div class="card"><div class="ph"><div class="cam">📷</div><small>ضع صورة المنتج</small></div><div class="card-body"><h3>إضاءة LED ديكور</h3><div class="meta"><div class="price">42 ₪</div><span class="sold">تم بيع 300</span></div><div class="qty-row"><span class="qty-label">الكمية</span><div class="stepper"><button onclick="dec(this)">−</button><span class="q">1</span><button onclick="inc(this)">+</button></div></div><button class="add" onclick="addCart(this)">أضف 1 إلى السلة</button></div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-inner">
     <div>
-      <div style="font-size:0.72rem;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem;">Table 01</div>
-      <h2>Demographics &amp; <span>Clinical Characteristics</span></h2>
+      <div class="logo" style="color:#fff">متجري<span style="color:var(--gold)">.</span></div>
+      <p style="margin-top:10px;max-width:240px">منتجات مختارة ومتوفرة محليًا، مع تسليم سريع والدفع عند الاستلام.</p>
     </div>
+    <div><h4>الأقسام</h4><a href="#electronics">الإلكترونيات</a><a href="#clothes">الملابس</a><a href="#cosmetics">التجميل</a><a href="#home">المنزل</a></div>
+    <div><h4>المساعدة</h4><a href="#">سياسة التوصيل</a><a href="#">الإرجاع والاستبدال</a><a href="#">تواصل معنا</a></div>
+    <div><h4>تابعنا</h4><a href="#">إنستغرام</a><a href="#">فيسبوك</a><a href="#">واتساب</a></div>
   </div>
-  <div class="section-layout">
-    <div>
-      <div class="intro-card">Baseline characteristics of <strong>83 haemodialysis patients</strong> split at the cohort median hs-Troponin I of <strong>61.8 ng/L</strong> into high (n=41) and low (n=42) groups. Groups were broadly similar, but <strong>age, ultrafiltration volume, and cerebrovascular accident history</strong> differed significantly. Tap any row to see its explanation.</div>
-
-      <div class="sub-section">
-        <div class="sub-section-header"><span class="sh-accent">01 ·</span> Demographics</div>
-        <div class="table-wrapper"><table>
-          <thead><tr><th>Characteristic</th><th>Total (N=83)</th><th>High &gt;61.8 ng/L (n=41)</th><th>Low ≤61.8 ng/L (n=42)</th><th>p-value</th></tr></thead>
-          <tbody>
-            <tr class="hoverable" onmouseenter="showExplain('e-age')" ontouchstart="showExplain('e-age')" onmouseleave="hideExplain()"><td>Age (years), median (IQR)</td><td>64.0 (44.0–75.0)</td><td>67.0 (52.0–76.0)</td><td>58.0 (40.0–72.0)</td><td><span class="sig-badge">0.033 ✓</span></td></tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-sex')" ontouchstart="showExplain('e-sex')" onmouseleave="hideExplain()"><td>Male sex, n (%)</td><td>44 (53.0%)</td><td>26 (63.4%)</td><td>18 (42.9%)</td><td><span class="ns-badge">0.076</span></td></tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-bmi')" ontouchstart="showExplain('e-bmi')" onmouseleave="hideExplain()"><td>BMI (kg/m²), median (IQR)</td><td>27.4 (23.3–31.5)</td><td>27.3 (22.9–31.2)</td><td>27.6 (23.8–31.8)</td><td><span class="ns-badge">0.880</span></td></tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-smoke')" ontouchstart="showExplain('e-smoke')" onmouseleave="hideExplain()"><td>Smoking (non-smoker)</td><td>65 (78.3%)</td><td>33 (80.5%)</td><td>32 (76.2%)</td><td><span class="ns-badge">0.777</span></td></tr>
-          </tbody>
-        </table></div>
-      </div>
-
-      <div class="sub-section">
-        <div class="sub-section-header"><span class="sh-accent">02 ·</span> Dialysis Characteristics</div>
-        <div class="table-wrapper"><table>
-          <thead><tr><th>Characteristic</th><th>Total (N=83)</th><th>High &gt;61.8 ng/L (n=41)</th><th>Low ≤61.8 ng/L (n=42)</th><th>p-value</th></tr></thead>
-          <tbody>
-            <tr class="hoverable" onmouseenter="showExplain('e-dur')" ontouchstart="showExplain('e-dur')" onmouseleave="hideExplain()"><td>Dialysis duration (months)</td><td>51.6 (26.9–92.5)</td><td>51.8 (33.7–92.2)</td><td>50.6 (24.0–92.8)</td><td><span class="ns-badge">0.050*</span></td></tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-ktv')" ontouchstart="showExplain('e-ktv')" onmouseleave="hideExplain()"><td>Kt/V (urea clearance)</td><td>1.19 (1.02–1.37)</td><td>1.13 (1.00–1.39)</td><td>1.25 (1.08–1.50)</td><td><span class="ns-badge">0.849</span></td></tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-uf')" ontouchstart="showExplain('e-uf')" onmouseleave="hideExplain()"><td>Ultrafiltration volume (mL)</td><td>2614 (2270–3310)</td><td>2615 (2281–3255)</td><td>2577 (2262–3362)</td><td><span class="sig-badge">0.040 ✓</span></td></tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-access')" ontouchstart="showExplain('e-access')" onmouseleave="hideExplain()"><td>Vascular access (AV fistula)</td><td>69 (83.1%)</td><td>36 (87.8%)</td><td>33 (78.6%)</td><td><span class="ns-badge">0.517</span></td></tr>
-          </tbody>
-        </table></div>
-      </div>
-
-      <div class="sub-section">
-        <div class="sub-section-header"><span class="sh-accent">03 ·</span> Comorbidities</div>
-        <div class="table-wrapper"><table>
-          <thead><tr><th>Characteristic</th><th>Total (N=83)</th><th>High &gt;61.8 ng/L (n=41)</th><th>Low ≤61.8 ng/L (n=42)</th><th>p-value</th></tr></thead>
-          <tbody>
-            <tr class="hoverable" onmouseenter="showExplain('e-dm')" ontouchstart="showExplain('e-dm')" onmouseleave="hideExplain()"><td>Diabetes mellitus, n (%)</td><td>41 (49.4%)</td><td>22 (53.7%)</td><td>19 (45.2%)</td><td><span class="ns-badge">0.443</span></td></tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-htn')" ontouchstart="showExplain('e-htn')" onmouseleave="hideExplain()"><td>Hypertension, n (%)</td><td>57 (68.7%)</td><td>28 (68.3%)</td><td>29 (69.0%)</td><td><span class="ns-badge">0.941</span></td></tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-ihd')" ontouchstart="showExplain('e-ihd')" onmouseleave="hideExplain()"><td>Ischaemic heart disease, n (%)</td><td>21 (25.3%)</td><td>13 (31.7%)</td><td>8 (19.0%)</td><td><span class="ns-badge">0.185</span></td></tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-cva')" ontouchstart="showExplain('e-cva')" onmouseleave="hideExplain()"><td>Cerebrovascular accident, n (%)</td><td>7 (8.4%)</td><td>6 (14.6%)</td><td>1 (2.4%)</td><td><span class="sig-badge">0.045 ✓</span></td></tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-hf')" ontouchstart="showExplain('e-hf')" onmouseleave="hideExplain()"><td>Heart failure, n (%)</td><td>6 (7.2%)</td><td>3 (7.3%)</td><td>3 (7.1%)</td><td><span class="ns-badge">0.976</span></td></tr>
-          </tbody>
-        </table></div>
-      </div>
-
-      <div class="sub-section">
-        <div class="sub-section-header"><span class="sh-accent">04 ·</span> Laboratory Values</div>
-        <div class="table-wrapper"><table>
-          <thead><tr><th>Characteristic</th><th>Total (N=83)</th><th>High &gt;61.8 ng/L (n=41)</th><th>Low ≤61.8 ng/L (n=42)</th><th>p-value</th></tr></thead>
-          <tbody>
-            <tr class="hoverable" onmouseenter="showExplain('e-trop')" ontouchstart="showExplain('e-trop')" onmouseleave="hideExplain()"><td>hs-Troponin I (ng/L)*</td><td>61.8 (41.2–89.6)</td><td>90.0 (74.8–109.0)</td><td>41.2 (31.7–51.3)</td><td><span class="sig-badge">By design</span></td></tr>
-            <tr class="hoverable" onmouseenter="showExplain('e-crp')" ontouchstart="showExplain('e-crp')" onmouseleave="hideExplain()"><td>CRP (mg/L), median (IQR)</td><td>8.4 (2.3–14.8)</td><td>8.9 (3.5–15.4)</td><td>8.0 (1.5–14.2)</td><td><span class="ns-badge">0.178</span></td></tr>
-          </tbody>
-        </table></div>
-      </div>
-
-      <div class="footnote">* Groups defined by cohort median hs-Troponin I = 61.8 ng/L. 98.8% of patients exceeded the standard 99th-percentile URL of 14 ng/L. Fisher's Exact test applied where expected cell count &lt; 5. AV = arteriovenous; BMI = body mass index; CRP = C-reactive protein; Kt/V = urea clearance index; UF = ultrafiltration.</div>
-    </div>
-
-    <div class="explain-panel">
-      <h4>Data Point Explanation</h4>
-      <p class="explain-default">Tap any row in the table to see a detailed explanation of that data point and its clinical significance.</p>
-      <div class="explain-content" id="e-age"><h5>Age</h5><p>The high-troponin group was significantly older (median 67 vs. 58 years). Age is one of the most consistent drivers of troponin elevation in ESRD — cumulative exposure to uraemic toxins, myocardial fibrosis, and LV remodelling over decades leads to progressive cardiomyocyte damage and release.</p><span class="p-val p-sig">p = 0.033 — Significant ✓</span></div>
-      <div class="explain-content" id="e-sex"><h5>Male Sex</h5><p>Males showed a trend toward higher troponin (63.4% vs 42.9%), but this did not reach significance. The trend is biologically plausible — males may have greater LV mass and different myocardial remodelling responses. However, with n=83 this study was underpowered to confirm a sex effect.</p><span class="p-val p-ns">p = 0.076 — Not significant</span></div>
-      <div class="explain-content" id="e-bmi"><h5>Body Mass Index (BMI)</h5><p>BMI was virtually identical between groups (27.3 vs 27.6 kg/m²), indicating that body composition and obesity do not independently drive troponin elevation in this cohort. Both groups were in the overweight range, consistent with the haemodialysis population.</p><span class="p-val p-ns">p = 0.880 — Not significant</span></div>
-      <div class="explain-content" id="e-smoke"><h5>Smoking Status</h5><p>Smoking distribution was nearly identical (~78% non-smokers in both). Smoking history does not contribute meaningfully to chronic troponin elevation in established ESRD, likely because uraemic and haemodynamic mechanisms dominate.</p><span class="p-val p-ns">p = 0.777 — Not significant</span></div>
-      <div class="explain-content" id="e-dur"><h5>Dialysis Duration</h5><p>Dialysis duration was almost identical (~51.7 months both). The p = 0.050 falls exactly at threshold and was pre-specified as non-significant. Spearman correlation (rs = +0.12, p = 0.279) also confirmed no linear relationship.</p><span class="p-val p-ns">p = 0.050 — Not significant (borderline)</span></div>
-      <div class="explain-content" id="e-ktv"><h5>Kt/V (Dialysis Adequacy)</h5><p>As a median-split, Kt/V did not differ significantly (1.13 vs 1.25, p = 0.849). However, as a continuous variable: Spearman rs = −0.34 (p = 0.001) and GLM (p = 0.051) confirm a clinically meaningful inverse relationship: a 0.1-unit drop in Kt/V ≈ 6.5% rise in troponin.</p><span class="p-val p-ns">p = 0.849 as dichotomous — misleading; see Table 3</span></div>
-      <div class="explain-content" id="e-uf"><h5>Ultrafiltration Volume</h5><p>The high-troponin group had significantly higher UF volumes (2615 vs 2577 mL, p = 0.040). Larger UF reflects greater fluid overload between sessions — haemodynamic stress (volume overload → wall stress → myocardial stretch) may drive troponin release through myocardial strain, even without acute ischaemia.</p><span class="p-val p-sig">p = 0.040 — Significant ✓</span></div>
-      <div class="explain-content" id="e-access"><h5>Vascular Access</h5><p>No significant difference in vascular access type. AV fistulas were most common (~83%) in both groups. Access type does not appear to influence troponin levels in this cohort.</p><span class="p-val p-ns">p = 0.517 — Not significant</span></div>
-      <div class="explain-content" id="e-dm"><h5>Diabetes Mellitus</h5><p>Diabetes present in ~50% overall, slightly higher in the high group (53.7% vs 45.2%), not statistically significant. In the multivariable GLM, diabetes showed a borderline trend (B = +0.301, p = 0.052), suggesting a possible independent contribution the study was underpowered to confirm.</p><span class="p-val p-ns">p = 0.443 — Not significant</span></div>
-      <div class="explain-content" id="e-htn"><h5>Hypertension</h5><p>Hypertension prevalence was identical between groups (68.3% vs 69.0%). Despite being a major driver of LVH, it does not discriminate high from low troponin groups — likely because it is near-universal in the ESRD population.</p><span class="p-val p-ns">p = 0.941 — Not significant</span></div>
-      <div class="explain-content" id="e-ihd"><h5>Ischaemic Heart Disease</h5><p>IHD was more prevalent in the high-troponin group (31.7% vs 19.0%) — biologically plausible — but did not reach significance, likely due to small sample size.</p><span class="p-val p-ns">p = 0.185 — Not significant</span></div>
-      <div class="explain-content" id="e-cva"><h5>Cerebrovascular Accident (Stroke)</h5><p>A history of stroke was strikingly more common in the high-troponin group (14.6% vs 2.4%, p = 0.045). This reflects shared pathophysiology: both troponin elevation and stroke in ESRD are driven by uraemic cardiomyopathy, endothelial dysfunction, and systemic atherosclerosis.</p><span class="p-val p-sig">p = 0.045 — Significant ✓</span></div>
-      <div class="explain-content" id="e-hf"><h5>Heart Failure</h5><p>Heart failure prevalence was identical between groups (7.3% vs 7.1%). With only 6 cases total, there was insufficient power to detect a difference. Heart failure in ESRD is often subclinical or underdiagnosed.</p><span class="p-val p-ns">p = 0.976 — Not significant</span></div>
-      <div class="explain-content" id="e-trop"><h5>hs-Troponin I (Defining Variable)</h5><p>Groups defined by the cohort median of 61.8 ng/L — over 4× the standard URL of 14 ng/L. Critically, 98.8% of ALL patients exceeded 14 ng/L, demonstrating that the standard ACS cut-off is clinically meaningless in haemodialysis patients.</p><span class="p-val p-sig">Groups defined by this cut-off — by design</span></div>
-      <div class="explain-content" id="e-crp"><h5>C-Reactive Protein (CRP)</h5><p>CRP did not differ between groups (8.9 vs 8.0 mg/L, p = 0.178). Spearman correlation also showed no relationship (rs = +0.06, p = 0.593). Systemic inflammation alone is not the primary mechanism — structural and haemodynamic mechanisms dominate.</p><span class="p-val p-ns">p = 0.178 — Not significant</span></div>
-    </div>
-  </div>
-</div>
-
-
-<!-- ══ PAGE 2 — TABLE 2 ══ -->
-<div id="page-t2" class="page">
-  <nav>
-    <div class="nav-logo">ESRD <span>Troponin Study</span></div>
-    <button class="back-btn" onclick="showPage('page-main')">← Back to Overview</button>
-  </nav>
-  <div class="section-page-header">
-    <div>
-      <div style="font-size:0.72rem;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem;">Table 02</div>
-      <h2>ECG Findings <span>&amp; Intervals</span></h2>
-    </div>
-  </div>
-  <div class="section-layout">
-    <div>
-      <div class="intro-card">Electrocardiographic analysis of <strong>83 patients</strong> by troponin group. ECG abnormalities were <strong>common across both groups</strong> — confirming widespread cardiac disease in ESRD — but most parameters did <strong>not</strong> differ significantly. The only exception was <strong>QRS duration</strong> (p = 0.046).</div>
-      <div class="table-wrapper"><table>
-        <thead><tr><th>ECG Parameter</th><th>Total (N=83)</th><th>High &gt;61.8 ng/L (n=41)</th><th>Low ≤61.8 ng/L (n=42)</th><th>p-value</th></tr></thead>
-        <tbody>
-          <tr class="grp"><td colspan="5">Rhythm</td></tr>
-          <tr class="hoverable" onmouseenter="showExplain('e-sr')" ontouchstart="showExplain('e-sr')" onmouseleave="hideExplain()"><td>Sinus rhythm, n (%)</td><td>71 (85.5%)</td><td>33 (80.5%)</td><td>38 (90.5%)</td><td><span class="ns-badge">0.379</span></td></tr>
-          <tr class="hoverable" onmouseenter="showExplain('e-af')" ontouchstart="showExplain('e-af')" onmouseleave="hideExplain()"><td>Atrial fibrillation/flutter, n (%)</td><td>10 (12.0%)</td><td>7 (17.1%)</td><td>3 (7.1%)</td><td><span class="ns-badge">—</span></td></tr>
-          <tr class="hoverable" onmouseenter="showExplain('e-paced')" ontouchstart="showExplain('e-paced')" onmouseleave="hideExplain()"><td>Paced rhythm, n (%)</td><td>2 (2.4%)</td><td>1 (2.4%)</td><td>1 (2.4%)</td><td><span class="ns-badge">—</span></td></tr>
-          <tr class="grp"><td colspan="5">ECG Intervals (ms, median IQR)</td></tr>
-          <tr class="hoverable" onmouseenter="showExplain('e-qtc')" ontouchstart="showExplain('e-qtc')" onmouseleave="hideExplain()"><td>QTc interval (N=83)</td><td>440 (418–458)</td><td>430 (390–470)</td><td>445 (418–457)</td><td><span class="ns-badge">0.593</span></td></tr>
-          <tr class="hoverable" onmouseenter="showExplain('e-qrs')" ontouchstart="showExplain('e-qrs')" onmouseleave="hideExplain()"><td>QRS duration (N=83)</td><td>100 (88–112)</td><td>94 (62–126)</td><td>100 (80–100)</td><td><span class="sig-badge">0.046 ✓</span></td></tr>
-          <tr class="hoverable" onmouseenter="showExplain('e-pq')" ontouchstart="showExplain('e-pq')" onmouseleave="hideExplain()"><td>PQ interval (N=72)</td><td>169 (150–187)</td><td>172 (150–195)</td><td>163 (133–163)</td><td><span class="ns-badge">0.641</span></td></tr>
-          <tr class="grp"><td colspan="5">Binary ECG Findings</td></tr>
-          <tr class="hoverable" onmouseenter="showExplain('e-std')" ontouchstart="showExplain('e-std')" onmouseleave="hideExplain()"><td>ST-segment depression (STD)</td><td>24 (28.9%)</td><td>11 (26.8%)</td><td>13 (31.0%)</td><td><span class="ns-badge">0.679</span></td></tr>
-          <tr class="hoverable" onmouseenter="showExplain('e-twi')" ontouchstart="showExplain('e-twi')" onmouseleave="hideExplain()"><td>T-wave inversion (TWI)</td><td>36 (43.4%)</td><td>19 (46.3%)</td><td>17 (40.5%)</td><td><span class="ns-badge">0.590</span></td></tr>
-          <tr class="hoverable" onmouseenter="showExplain('e-lvstrain')" ontouchstart="showExplain('e-lvstrain')" onmouseleave="hideExplain()"><td>LV strain pattern (STD + TWI lateral)</td><td>21 (25.3%)</td><td>10 (24.4%)</td><td>11 (26.2%)</td><td><span class="ns-badge">0.850</span></td></tr>
-          <tr class="hoverable" onmouseenter="showExplain('e-lvh')" ontouchstart="showExplain('e-lvh')" onmouseleave="hideExplain()"><td>LV hypertrophy (LVH), any criterion</td><td>39 (47.0%)</td><td>18 (43.9%)</td><td>21 (50.0%)</td><td><span class="ns-badge">0.578</span></td></tr>
-          <tr class="hoverable" onmouseenter="showExplain('e-qwave')" ontouchstart="showExplain('e-qwave')" onmouseleave="hideExplain()"><td>Pathological Q waves</td><td>7 (8.4%)</td><td>5 (12.2%)</td><td>2 (4.8%)</td><td><span class="ns-badge">0.265</span></td></tr>
-          <tr class="hoverable" onmouseenter="showExplain('e-lbbb')" ontouchstart="showExplain('e-lbbb')" onmouseleave="hideExplain()"><td>Left bundle branch block (LBBB)</td><td>3 (3.6%)</td><td>2 (4.9%)</td><td>1 (2.4%)</td><td><span class="ns-badge">0.830</span></td></tr>
-          <tr class="hoverable" onmouseenter="showExplain('e-qtcprol')" ontouchstart="showExplain('e-qtcprol')" onmouseleave="hideExplain()"><td>QTc prolongation (&gt;440 ms)</td><td>24 (28.9%)</td><td>12 (29.3%)</td><td>12 (28.6%)</td><td><span class="ns-badge">0.944</span></td></tr>
-        </tbody>
-      </table></div>
-      <div class="footnote">Fisher's Exact test applied where expected cell count &lt; 5. PQ interval available in 72/83 patients (AF/flutter patients excluded). LV strain = simultaneous STD + TWI in lateral leads. LVH = left ventricular hypertrophy; LBBB = left bundle branch block; QTc = Bazett-corrected QT interval.</div>
-    </div>
-    <div class="explain-panel">
-      <h4>Data Point Explanation</h4>
-      <p class="explain-default">Tap any row in the table to see a detailed explanation of that ECG finding and its clinical significance in ESRD.</p>
-      <div class="explain-content" id="e-sr"><h5>Sinus Rhythm</h5><p>80.5% of the high-troponin group maintained sinus rhythm vs 90.5% in the low group, but this was not significant (p = 0.379). The higher rate of non-sinus rhythm in the high group is driven largely by AF/flutter clustering — consistent with elevated troponin reflecting greater atrial and ventricular remodelling.</p><span class="p-val p-ns">p = 0.379 — Not significant</span></div>
-      <div class="explain-content" id="e-af"><h5>Atrial Fibrillation / Flutter</h5><p>AF/flutter was more than twice as prevalent in the high-troponin group (17.1% vs 7.1%), though no formal p-value was calculated due to small expected counts. In ESRD, AF is associated with volume overload, electrolyte disturbances, and structural atrial disease — all of which also promote troponin elevation.</p><span class="p-val p-ns">No p-value (small counts)</span></div>
-      <div class="explain-content" id="e-paced"><h5>Paced Rhythm</h5><p>Only 2 patients (one per group) had paced rhythms — far too few to draw conclusions. Paced rhythm also confounds ECG interpretation, so these patients' ECG morphology data should be interpreted cautiously.</p><span class="p-val p-ns">n = 2 — Insufficient for analysis</span></div>
-      <div class="explain-content" id="e-qtc"><h5>QTc Interval</h5><p>Despite the theoretical concern that higher troponin might accompany longer QTc, there was no significant difference between groups (430 vs 445 ms, p = 0.593). Wide IQRs in the high group suggest electrolyte fluctuations inherent to haemodialysis drive variability.</p><span class="p-val p-ns">p = 0.593 — Not significant</span></div>
-      <div class="explain-content" id="e-qrs"><h5>QRS Duration ★ Significant</h5><p>The only ECG interval to differ significantly (94 ms high vs 100 ms low, p = 0.046). Paradoxically, the high-troponin group had a shorter median QRS. Wide IQRs (62–126 ms in high group) suggest high within-group variability — likely a subset with intraventricular conduction defects skewing the IQR rather than a true biological effect.</p><span class="p-val p-sig">p = 0.046 — Significant ✓ (interpret cautiously)</span></div>
-      <div class="explain-content" id="e-pq"><h5>PQ Interval</h5><p>Available in 72/83 patients (AF and paced rhythm patients excluded). No significant difference between groups (172 vs 163 ms, p = 0.641). PR interval prolongation suggesting AV nodal disease does not track with troponin levels in this cohort.</p><span class="p-val p-ns">p = 0.641 — Not significant</span></div>
-      <div class="explain-content" id="e-std"><h5>ST-Segment Depression (STD)</h5><p>Present in ~29% of all patients — a high background prevalence reflecting uraemic cardiomyopathy. STD was equally distributed between groups (26.8% vs 31.0%, p = 0.679), confirming that chronic troponin elevation in ESRD does not result from ongoing ischaemia detectable by surface ECG.</p><span class="p-val p-ns">p = 0.679 — Not significant</span></div>
-      <div class="explain-content" id="e-twi"><h5>T-Wave Inversion (TWI)</h5><p>T-wave inversion present in 43.4% of all patients — strikingly high, reflecting widespread ventricular strain in ESRD. TWI did not differ between troponin groups (46.3% vs 40.5%, p = 0.590), suggesting it is a marker of the ESRD substrate generally, not specifically linked to troponin magnitude.</p><span class="p-val p-ns">p = 0.590 — Not significant</span></div>
-      <div class="explain-content" id="e-lvstrain"><h5>LV Strain Pattern</h5><p>Defined as simultaneous STD + TWI in lateral leads, LV strain was present in 25.3% overall. Prevalence was nearly identical between troponin groups (24.4% vs 26.2%, p = 0.850) — reinforcing that chronic troponin elevation in ESRD reflects sustained structural damage, not acute ischaemia.</p><span class="p-val p-ns">p = 0.850 — Not significant</span></div>
-      <div class="explain-content" id="e-lvh"><h5>Left Ventricular Hypertrophy (LVH)</h5><p>LVH present in 47% of all patients by ECG criteria — consistent with high ESRD prevalence from pressure overload. LVH was not more prevalent in the high-troponin group (43.9% vs 50.0%, p = 0.578), suggesting LVH per se is not the primary mechanism of chronic troponin elevation.</p><span class="p-val p-ns">p = 0.578 — Not significant</span></div>
-      <div class="explain-content" id="e-qwave"><h5>Pathological Q Waves</h5><p>Q waves more common in high-troponin group (12.2% vs 4.8%) but not significantly so (p = 0.265). The multivariable GLM confirmed no significant independent contribution (B = −0.385, p = 0.146), even after adjusting for age, Kt/V, and diabetes.</p><span class="p-val p-ns">p = 0.265 — Not significant</span></div>
-      <div class="explain-content" id="e-lbbb"><h5>Left Bundle Branch Block (LBBB)</h5><p>LBBB was rare (3 patients total) and equally uncommon in both groups. Too few cases to draw conclusions. LBBB can cause troponin elevation through mechanical dyssynchrony independent of coronary disease.</p><span class="p-val p-ns">p = 0.830 — Not significant (n too small)</span></div>
-      <div class="explain-content" id="e-qtcprol"><h5>QTc Prolongation (&gt;440 ms)</h5><p>QTc prolongation affected 28.9% of all patients — a high, clinically concerning prevalence. However, prevalence was virtually identical between groups (29.3% vs 28.6%, p = 0.944), confirming that chronically elevated troponin and QTc prolongation are independent manifestations of uraemic cardiomyopathy.</p><span class="p-val p-ns">p = 0.944 — Not significant</span></div>
-    </div>
-  </div>
-</div>
-
-
-<!-- ══ PAGE 3 — TABLE 3 ══ -->
-<div id="page-t3" class="page">
-  <nav>
-    <div class="nav-logo">ESRD <span>Troponin Study</span></div>
-    <button class="back-btn" onclick="showPage('page-main')">← Back to Overview</button>
-  </nav>
-  <div class="section-page-header">
-    <div>
-      <div style="font-size:0.72rem;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem;">Table 03</div>
-      <h2>Spearman Rank <span>Correlations</span></h2>
-    </div>
-  </div>
-  <div class="section-layout">
-    <div>
-      <div class="intro-card">Spearman's rank correlation (rs) was used to assess <strong>monotonic relationships</strong> between continuous variables and hs-Troponin I as a continuous outcome (N=83). This non-parametric approach is appropriate given the skewed distribution of troponin. <strong>Age and Kt/V</strong> were the only two significant correlates.</div>
-      <div class="table-wrapper"><table>
-        <thead><tr><th>Variable</th><th>Spearman's rs</th><th>p-value</th><th>Interpretation</th></tr></thead>
-        <tbody>
-          <tr class="hoverable" onmouseenter="showExplain('e-c-age')" ontouchstart="showExplain('e-c-age')" onmouseleave="hideExplain()"><td>Age (years)</td><td style="color:var(--accent-dk);font-weight:700">+0.27</td><td><span class="sig-badge">0.015 ✓</span></td><td>Weak positive — older patients have higher troponin</td></tr>
-          <tr class="hoverable" onmouseenter="showExplain('e-c-ktv')" ontouchstart="showExplain('e-c-ktv')" onmouseleave="hideExplain()"><td>Kt/V (dialysis adequacy)</td><td style="color:var(--accent-dk);font-weight:700">−0.34</td><td><span class="sig-badge">0.001 ✓</span></td><td>Moderate negative — lower Kt/V → higher troponin</td></tr>
-          <tr class="hoverable" onmouseenter="showExplain('e-c-dur')" ontouchstart="showExplain('e-c-dur')" onmouseleave="hideExplain()"><td>Dialysis duration (months)</td><td style="color:#9CA3AF">+0.12</td><td><span class="ns-badge">0.279</span></td><td>Not significant</td></tr>
-          <tr class="hoverable" onmouseenter="showExplain('e-c-crp')" ontouchstart="showExplain('e-c-crp')" onmouseleave="hideExplain()"><td>CRP (mg/L)</td><td style="color:#9CA3AF">+0.06</td><td><span class="ns-badge">0.593</span></td><td>Not significant</td></tr>
-          <tr class="hoverable" onmouseenter="showExplain('e-c-qrs')" ontouchstart="showExplain('e-c-qrs')" onmouseleave="hideExplain()"><td>QRS duration (ms)</td><td style="color:#6B5C1E;font-weight:700">−0.22</td><td><span class="border-badge">0.049 ~</span></td><td>Borderline — weak inverse association</td></tr>
-          <tr class="hoverable" onmouseenter="showExplain('e-c-qtc')" ontouchstart="showExplain('e-c-qtc')" onmouseleave="hideExplain()"><td>QTc interval (ms)</td><td style="color:#9CA3AF">+0.06</td><td><span class="ns-badge">0.593</span></td><td>Not significant</td></tr>
-        </tbody>
-      </table></div>
-      <div class="footnote">Outcome: continuous hs-Troponin I (ng/L); N = 83. Spearman's rho (rs) measures monotonic — not necessarily linear — rank correlation. CRP = C-reactive protein; QTc = corrected QT interval (Bazett formula).</div>
-    </div>
-    <div class="explain-panel">
-      <h4>Data Point Explanation</h4>
-      <p class="explain-default">Tap any row to understand what the correlation coefficient means and its clinical implications.</p>
-      <div class="explain-content" id="e-c-age"><h5>Age — rs = +0.27, p = 0.015</h5><p>A weak but statistically significant positive correlation: as age increases, so does hs-Troponin I. Consistent with cumulative myocardial injury in ESRD — decades of uraemic toxin exposure, repetitive haemodynamic stress, and progressive myocardial fibrosis. The effect persisted independently in the multivariable GLM (p = 0.003), confirming age as the primary driver.</p><span class="p-val p-sig">p = 0.015 — Significant ✓ | Confirmed in GLM</span></div>
-      <div class="explain-content" id="e-c-ktv"><h5>Kt/V — rs = −0.34, p = 0.001</h5><p>The strongest correlation: patients with lower dialysis adequacy have higher troponin. rs = −0.34 represents a moderate-strength inverse relationship. Inadequate dialysis leads to uraemic toxin accumulation, directly damaging cardiomyocytes. A 0.1-unit decrease in Kt/V ≈ 6.5% rise in troponin (e^0.0635 = 1.065). Attenuated to borderline in the GLM (p = 0.051) after adjusting for age and diabetes.</p><span class="p-val p-sig">p = 0.001 — Strongest correlation ✓</span></div>
-      <div class="explain-content" id="e-c-dur"><h5>Dialysis Duration — rs = +0.12, p = 0.279</h5><p>Despite the biological rationale (longer ESRD → more cumulative damage → higher troponin), dialysis duration shows no significant correlation. The rate of myocardial injury may matter more than total duration, or survivor bias flattens the relationship over time.</p><span class="p-val p-ns">p = 0.279 — Not significant</span></div>
-      <div class="explain-content" id="e-c-crp"><h5>CRP — rs = +0.06, p = 0.593</h5><p>CRP, a marker of systemic inflammation, showed essentially zero correlation (rs = 0.06 is negligible). This argues against systemic inflammation being the primary mechanism — structural, haemodynamic, and uraemic mechanisms dominate instead.</p><span class="p-val p-ns">p = 0.593 — Not significant</span></div>
-      <div class="explain-content" id="e-c-qrs"><h5>QRS Duration — rs = −0.22, p = 0.049</h5><p>A weak inverse correlation that barely crossed the significance threshold. Paradoxically, higher troponin is associated with slightly shorter QRS duration. Likely reflects competing effects from LBBB and paced rhythm in some high-troponin patients. Interpret cautiously — borderline as continuous and non-significant as dichotomous (Table 2).</p><span class="p-val p-border">p = 0.049 — Borderline (interpret with caution)</span></div>
-      <div class="explain-content" id="e-c-qtc"><h5>QTc Interval — rs = +0.06, p = 0.593</h5><p>No meaningful correlation between QTc and troponin (rs = 0.06 is negligible). In ESRD, QTc prolongation is driven predominantly by electrolyte disturbances (hyperkalaemia, hypocalcaemia) rather than by the degree of troponin-associated myocardial injury.</p><span class="p-val p-ns">p = 0.593 — Not significant</span></div>
-    </div>
-  </div>
-</div>
-
-
-<!-- ══ PAGE 4 — TABLE 4 ══ -->
-<div id="page-t4" class="page">
-  <nav>
-    <div class="nav-logo">ESRD <span>Troponin Study</span></div>
-    <button class="back-btn" onclick="showPage('page-main')">← Back to Overview</button>
-  </nav>
-  <div class="section-page-header">
-    <div>
-      <div style="font-size:0.72rem;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem;">Table 04</div>
-      <h2>Multivariable <span>GLM Results</span></h2>
-    </div>
-  </div>
-  <div class="section-layout">
-    <div>
-      <div class="intro-card">A <strong>Generalised Linear Model (GLM)</strong> with natural log-transformed hs-Troponin I as the outcome was constructed to identify <strong>independent predictors</strong> adjusting for confounders simultaneously. The model included n=82 patients, demonstrated good fit (AIC = 176.8, omnibus p &lt; 0.001), and tested four key predictors. <strong>Age</strong> was the only significant independent predictor.</div>
-      <div class="table-wrapper"><table>
-        <thead><tr><th>Predictor</th><th>Effect (B)</th><th>SE</th><th>95% CI</th><th>p-value</th></tr></thead>
-        <tbody>
-          <tr class="hoverable" onmouseenter="showExplain('e-g-age')" ontouchstart="showExplain('e-g-age')" onmouseleave="hideExplain()"><td>Age (years)</td><td style="color:var(--accent-dk);font-weight:700">+0.016</td><td>0.005</td><td>+0.005 to +0.027</td><td><span class="sig-badge">0.003 ✓</span></td></tr>
-          <tr class="hoverable" onmouseenter="showExplain('e-g-ktv')" ontouchstart="showExplain('e-g-ktv')" onmouseleave="hideExplain()"><td>Kt/V (dialysis adequacy)</td><td style="color:#6B5C1E;font-weight:700">−0.635</td><td>0.325</td><td>−1.273 to −0.002</td><td><span class="border-badge">0.051 ~</span></td></tr>
-          <tr class="hoverable" onmouseenter="showExplain('e-g-dm')" ontouchstart="showExplain('e-g-dm')" onmouseleave="hideExplain()"><td>Diabetes mellitus (yes vs no)</td><td style="color:#6B5C1E;font-weight:700">+0.301</td><td>0.155</td><td>−0.003 to +0.604</td><td><span class="border-badge">0.052 ~</span></td></tr>
-          <tr class="hoverable" onmouseenter="showExplain('e-g-qwave')" ontouchstart="showExplain('e-g-qwave')" onmouseleave="hideExplain()"><td>Pathological Q waves (yes vs no)</td><td style="color:#9CA3AF">−0.385</td><td>0.265</td><td>−0.904 to +0.134</td><td><span class="ns-badge">0.146</span></td></tr>
-        </tbody>
-      </table></div>
-      <div class="intro-card" style="margin-top:1rem"><strong>Model specification:</strong> Outcome = ln(hs-Troponin I); normal distribution, identity link; n = 82; AIC = 176.8; omnibus p &lt; 0.001. Effect estimate B = change in log-troponin per 1-unit increase in predictor (continuous) or vs reference category (binary). Reference: DM absent, Q waves absent.</div>
-      <div class="footnote">* Kt/V demonstrates a significant inverse relationship with troponin when modelled as continuous in univariate Spearman correlation (rs = −0.34, p = 0.001), but its independent effect is attenuated to borderline significance after adjusting for age and diabetes (B = −0.635, p = 0.051). A 0.1-unit decrease in Kt/V corresponds to approximately 6.5% rise in troponin level (e^0.0635 = 1.065). † ECG variable included to confirm absence of independent effect; sensitivity models replacing Q waves with LV strain (p = 0.410), ST depression (p = 0.380), or T-wave inversion (p = 0.128) were all non-significant.</div>
-    </div>
-    <div class="explain-panel">
-      <h4>Data Point Explanation</h4>
-      <p class="explain-default">Tap any predictor row to understand what the effect estimate means in clinical terms and how to interpret confidence intervals in the context of this model.</p>
-      <div class="explain-content" id="e-g-age"><h5>Age — B = +0.016, p = 0.003</h5><p>Age is the only variable reaching independent statistical significance. B = +0.016 means for each additional year of age, log(troponin) increases by 0.016 units — approximately a <strong>1.6% increase in troponin per year</strong> of age (e^0.016 ≈ 1.016). The 95% CI fully excludes zero (+0.005 to +0.027), confirming a robust independent effect. Cumulative myocardial injury from ESRD drives troponin elevation progressively with age, independent of other clinical factors.</p><span class="p-val p-sig">p = 0.003 — Sole significant independent predictor ✓</span></div>
-      <div class="explain-content" id="e-g-ktv"><h5>Kt/V — B = −0.635, p = 0.051</h5><p>Kt/V narrowly missed significance after adjusting for age and diabetes (p = 0.051). The 95% CI just touches zero (−1.273 to −0.002). A one-unit increase in Kt/V would correspond to a 47% decrease in troponin (e^−0.635), but a more realistic 0.1-unit increase corresponds to ~6.3% decrease. Attenuation from univariate (p = 0.001) to adjusted (p = 0.051) is likely due to age confounding. With a larger sample, Kt/V would likely achieve independent significance.</p><span class="p-val p-border">p = 0.051 — Borderline; clinically important</span></div>
-      <div class="explain-content" id="e-g-dm"><h5>Diabetes Mellitus — B = +0.301, p = 0.052</h5><p>Diabetes mellitus showed a borderline independent association with higher troponin (B = +0.301, p = 0.052). The CI just touches zero (−0.003 to +0.604). B = +0.301 translates to a <strong>35% higher troponin in diabetic vs non-diabetic patients</strong> (e^0.301 ≈ 1.35), adjusting for age, Kt/V, and Q waves. Diabetes in ESRD causes additional microvascular myocardial damage, autonomic neuropathy, and accelerated atherosclerosis. Borderline p-value likely reflects insufficient power (n=82, only 41 diabetics).</p><span class="p-val p-border">p = 0.052 — Borderline; likely significant with larger N</span></div>
-      <div class="explain-content" id="e-g-qwave"><h5>Pathological Q Waves — B = −0.385, p = 0.146</h5><p>Q waves showed no independent association with troponin (p = 0.146). The effect estimate is counterintuitively negative (B = −0.385) — likely a spurious finding from the small number of Q wave cases (n=7). Sensitivity analyses replacing Q waves with LV strain, ST depression, or T-wave inversion all confirmed no significant independent ECG effects — surface ECG morphology does not independently predict troponin magnitude in ESRD.</p><span class="p-val p-ns">p = 0.146 — Not significant; ECG not an independent predictor</span></div>
-    </div>
-  </div>
-</div>
-
+  <div class="copyright">© 2026 متجري — جميع الحقوق محفوظة • معاينة تصميم فقط</div>
+</footer>
 
 <script>
-  function showPage(id) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    hideExplain();
+  function setLabel(card){
+    var q = parseInt(card.querySelector('.q').textContent);
+    card.querySelector('.add').textContent = 'أضف ' + q + ' إلى السلة';
   }
-  function showExplain(id) {
-    document.querySelectorAll('.explain-content').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('.explain-default').forEach(el => el.style.display = 'none');
-    const el = document.getElementById(id);
-    if (el) el.classList.add('active');
+  function inc(btn){
+    var card = btn.closest('.card');
+    var qEl = card.querySelector('.q');
+    qEl.textContent = parseInt(qEl.textContent) + 1;
+    setLabel(card);
   }
-  function hideExplain() {
-    document.querySelectorAll('.explain-content').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('.explain-default').forEach(el => el.style.display = 'block');
+  function dec(btn){
+    var card = btn.closest('.card');
+    var qEl = card.querySelector('.q');
+    var v = parseInt(qEl.textContent);
+    if(v > 1){ qEl.textContent = v - 1; setLabel(card); }
+  }
+  function addCart(btn){
+    var card = btn.closest('.card');
+    var q = card.querySelector('.q').textContent;
+    var name = card.querySelector('h3').textContent;
+    btn.textContent = '✓ أضيف ' + q;
+    btn.style.background = '#3f7a3f';
+    setTimeout(function(){ setLabel(card); btn.style.background=''; }, 1200);
   }
 </script>
 
